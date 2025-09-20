@@ -1,3 +1,5 @@
 ﻿# Raspberry Pi Smart Hub
 
 This project uses a Raspberry Pi 3 as a smart hub for dumb lights.
+
+This is a work in progress and will be updated soon...
