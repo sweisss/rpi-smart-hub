@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Code to turn on patio lights using an RF transmitter.
-From Deepseek
+Final production version
 """
 from rpi_rf import RFDevice
 import argparse
