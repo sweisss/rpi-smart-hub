@@ -21,7 +21,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 220,
-        "y": 660,
+        "y": 600,
         "wires": [
             [
                 "0f88c497fd727840",
@@ -35,7 +35,7 @@
         "type": "debug",
         "z": "8d56d03bea1b2724",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -43,7 +43,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 470,
-        "y": 660,
+        "y": 600,
         "wires": []
     },
     {
@@ -59,7 +59,7 @@
         "oldrc": false,
         "name": "",
         "x": 600,
-        "y": 780,
+        "y": 720,
         "wires": [
             [
                 "8a0a05918d9c61af"
@@ -86,7 +86,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 890,
-        "y": 700,
+        "y": 640,
         "wires": []
     },
     {
@@ -102,7 +102,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 910,
-        "y": 740,
+        "y": 680,
         "wires": []
     },
     {
@@ -118,14 +118,14 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 910,
-        "y": 780,
+        "y": 720,
         "wires": []
     },
     {
         "id": "61bdbbb77aceb7cc",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "7:00pm Lights On",
+        "name": "6pm Lights On",
         "props": [
             {
                 "p": "payload"
@@ -137,38 +137,19 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 19 * * *",
+        "crontab": "00 18 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "on",
         "payloadType": "str",
-        "x": 230,
-        "y": 320,
+        "x": 220,
+        "y": 260,
         "wires": [
             [
-                "e91247eb39e65f58",
-                "2ec1d9b4b84eb451"
+                "b9254c801a6b7f22"
             ]
         ]
-    },
-    {
-        "id": "e91247eb39e65f58",
-        "type": "mqtt out",
-        "z": "8d56d03bea1b2724",
-        "name": "RPi Broker patioLights",
-        "topic": "patioLights",
-        "qos": "",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "8edadf0ceb978ad1",
-        "x": 460,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "0a8b46906abfc42d",
@@ -191,27 +172,9 @@
         "y": 140,
         "wires": [
             [
-                "2623b626187dda20"
+                "b9254c801a6b7f22"
             ]
         ]
-    },
-    {
-        "id": "174d22143fa1baf9",
-        "type": "mqtt out",
-        "z": "8d56d03bea1b2724",
-        "name": "RPi Broker patioLights",
-        "topic": "patioLights",
-        "qos": "",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "8edadf0ceb978ad1",
-        "x": 700,
-        "y": 140,
-        "wires": []
     },
     {
         "id": "41db169492deb898",
@@ -220,7 +183,7 @@
         "name": "",
         "token": "",
         "x": 200,
-        "y": 460,
+        "y": 380,
         "wires": [
             [
                 "f8526d4603c35eaf",
@@ -242,7 +205,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 390,
-        "y": 460,
+        "y": 380,
         "wires": []
     },
     {
@@ -263,7 +226,7 @@
         "repair": false,
         "outputs": 1,
         "x": 530,
-        "y": 560,
+        "y": 480,
         "wires": [
             [
                 "4908551a4b56d525"
@@ -276,8 +239,8 @@
         "z": "8d56d03bea1b2724",
         "name": "RPi Broker patioLights",
         "topic": "patioLights",
-        "qos": "",
-        "retain": "false",
+        "qos": "2",
+        "retain": "true",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
@@ -285,7 +248,7 @@
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
         "x": 1480,
-        "y": 520,
+        "y": 400,
         "wires": []
     },
     {
@@ -305,7 +268,7 @@
         "name": "Push Messages From Discord to the MQTT broker",
         "info": "",
         "x": 270,
-        "y": 420,
+        "y": 340,
         "wires": []
     },
     {
@@ -315,7 +278,7 @@
         "name": "Actions Directed From MQTT Broker",
         "info": "",
         "x": 220,
-        "y": 620,
+        "y": 540,
         "wires": []
     },
     {
@@ -335,7 +298,7 @@
         "name": "Only forward messages from the patiolights channel",
         "info": "",
         "x": 550,
-        "y": 520,
+        "y": 440,
         "wires": []
     },
     {
@@ -345,7 +308,7 @@
         "name": "Run the RF transmit script",
         "info": "",
         "x": 510,
-        "y": 740,
+        "y": 680,
         "wires": []
     },
     {
@@ -354,8 +317,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Report the topic update to Discord ",
         "info": "",
-        "x": 1380,
-        "y": 1080,
+        "x": 1360,
+        "y": 920,
         "wires": []
     },
     {
@@ -379,7 +342,7 @@
         "reduceInitType": "num",
         "reduceFixup": "",
         "x": 690,
-        "y": 900,
+        "y": 840,
         "wires": [
             [
                 "df11384755fdd4db",
@@ -407,7 +370,7 @@
         "to": "",
         "reg": false,
         "x": 490,
-        "y": 900,
+        "y": 840,
         "wires": [
             [
                 "e21f652302872085",
@@ -442,7 +405,7 @@
         "to": "",
         "reg": false,
         "x": 890,
-        "y": 860,
+        "y": 800,
         "wires": [
             [
                 "e21f652302872085",
@@ -471,7 +434,7 @@
         "repair": false,
         "outputs": 2,
         "x": 760,
-        "y": 1040,
+        "y": 980,
         "wires": [
             [
                 "d73445616a9ea577"
@@ -488,8 +451,8 @@
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1360,
-        "y": 1120,
+        "x": 1340,
+        "y": 1000,
         "wires": []
     },
     {
@@ -505,8 +468,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1330,
-        "y": 1180,
+        "x": 1310,
+        "y": 960,
         "wires": []
     },
     {
@@ -550,12 +513,11 @@
         "to": "",
         "reg": false,
         "x": 1000,
-        "y": 1020,
+        "y": 960,
         "wires": [
             [
                 "80fd4f6f507b9483",
-                "6655c2ea2d120e45",
-                "b3884b3c403526b5"
+                "6655c2ea2d120e45"
             ]
         ]
     },
@@ -593,7 +555,7 @@
         "to": "",
         "reg": false,
         "x": 990,
-        "y": 1060,
+        "y": 1000,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -608,7 +570,7 @@
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
         "x": 940,
-        "y": 980,
+        "y": 920,
         "wires": []
     },
     {
@@ -623,7 +585,7 @@
         "finalize": "",
         "libs": [],
         "x": 840,
-        "y": 560,
+        "y": 480,
         "wires": [
             [
                 "c8463ca6e32ddd3b"
@@ -642,7 +604,7 @@
         "finalize": "",
         "libs": [],
         "x": 1100,
-        "y": 560,
+        "y": 480,
         "wires": [
             [
                 "dcf306373b2971b1"
@@ -668,10 +630,11 @@
         "repair": false,
         "outputs": 2,
         "x": 1290,
-        "y": 560,
+        "y": 480,
         "wires": [
             [
-                "a7c76488b51676d9"
+                "a7c76488b51676d9",
+                "3c716a28fdb7d6c2"
             ],
             [
                 "7c3fe448cac3412b"
@@ -705,7 +668,7 @@
         "to": "",
         "reg": false,
         "x": 1510,
-        "y": 600,
+        "y": 500,
         "wires": [
             [
                 "5e391731b81c7ab2"
@@ -719,140 +682,9 @@
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1760,
-        "y": 600,
+        "x": 1820,
+        "y": 480,
         "wires": []
-    },
-    {
-        "id": "5b3de6e4ebde03d3",
-        "type": "complete",
-        "z": "8d56d03bea1b2724",
-        "name": "After 2am Lights Off",
-        "scope": [
-            "0a8b46906abfc42d"
-        ],
-        "uncaught": false,
-        "x": 210,
-        "y": 200,
-        "wires": [
-            [
-                "2ec1d9b4b84eb451"
-            ]
-        ]
-    },
-    {
-        "id": "2ec1d9b4b84eb451",
-        "type": "trigger",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "op1": "1",
-        "op2": "0",
-        "op1type": "str",
-        "op2type": "str",
-        "duration": "-30",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 450,
-        "y": 200,
-        "wires": [
-            [
-                "4046a054e0778fae"
-            ]
-        ]
-    },
-    {
-        "id": "b3884b3c403526b5",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "patiolights",
-                "pt": "flow",
-                "to": "command",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1350,
-        "y": 1020,
-        "wires": [
-            [
-                "14ff1f928f500e4f"
-            ]
-        ]
-    },
-    {
-        "id": "529a3036d145ac3d",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Store the MQTT message in the flow variable",
-        "info": "",
-        "x": 1410,
-        "y": 980,
-        "wires": []
-    },
-    {
-        "id": "4046a054e0778fae",
-        "type": "switch",
-        "z": "8d56d03bea1b2724",
-        "name": "if flow.patiolights != 'off'",
-        "property": "patiolights",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "neq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 670,
-        "y": 200,
-        "wires": [
-            [
-                "3c676cf2feb4b13d"
-            ]
-        ]
-    },
-    {
-        "id": "3c676cf2feb4b13d",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Set msg.payload to 'off'",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "off",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 930,
-        "y": 200,
-        "wires": [
-            [
-                "b9254c801a6b7f22"
-            ]
-        ]
     },
     {
         "id": "b9254c801a6b7f22",
@@ -860,84 +692,16 @@
         "z": "8d56d03bea1b2724",
         "name": "RPi Broker patioLights",
         "topic": "patioLights",
-        "qos": "",
-        "retain": "false",
+        "qos": "2",
+        "retain": "true",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
         "correl": "",
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
-        "x": 1180,
+        "x": 520,
         "y": 200,
-        "wires": []
-    },
-    {
-        "id": "2623b626187dda20",
-        "type": "switch",
-        "z": "8d56d03bea1b2724",
-        "name": "if flow.patiolights != 'off'",
-        "property": "patiolights",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "neq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 450,
-        "y": 140,
-        "wires": [
-            [
-                "174d22143fa1baf9"
-            ]
-        ]
-    },
-    {
-        "id": "14ff1f928f500e4f",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Set msg.payload to flow.patiolights for debug",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "patiolights",
-                "tot": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1660,
-        "y": 1020,
-        "wires": [
-            [
-                "30b4a98b2057a3d4"
-            ]
-        ]
-    },
-    {
-        "id": "30b4a98b2057a3d4",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1770,
-        "y": 1060,
         "wires": []
     },
     {
@@ -954,7 +718,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1070,
-        "y": 860,
+        "y": 800,
         "wires": []
     },
     {
@@ -971,7 +735,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 510,
-        "y": 960,
+        "y": 900,
         "wires": []
     },
     {
@@ -988,7 +752,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 850,
-        "y": 900,
+        "y": 840,
         "wires": []
     },
     {
@@ -1014,10 +778,10 @@
         "payload": "off",
         "payloadType": "str",
         "x": 220,
-        "y": 260,
+        "y": 200,
         "wires": [
             [
-                "2ec1d9b4b84eb451"
+                "b9254c801a6b7f22"
             ]
         ]
     },
@@ -1028,8 +792,42 @@
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
         "x": 590,
-        "y": 860,
+        "y": 800,
         "wires": []
+    },
+    {
+        "id": "3c716a28fdb7d6c2",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Valid Command Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "1403543416435900457",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": " $join(['Updating the lights to ', msg.payload])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1510,
+        "y": 460,
+        "wires": [
+            [
+                "5e391731b81c7ab2"
+            ]
+        ]
     },
     {
         "id": "8edadf0ceb978ad1",
