@@ -21,7 +21,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 220,
-        "y": 720,
+        "y": 780,
         "wires": [
             [
                 "093349a6f7ad70a9",
@@ -42,7 +42,7 @@
         "oldrc": false,
         "name": "",
         "x": 600,
-        "y": 720,
+        "y": 780,
         "wires": [
             [],
             [],
@@ -114,7 +114,7 @@
         "name": "",
         "token": "",
         "x": 200,
-        "y": 480,
+        "y": 540,
         "wires": [
             [
                 "91ce59c4c7e2345c"
@@ -139,7 +139,7 @@
         "repair": false,
         "outputs": 1,
         "x": 530,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "4908551a4b56d525"
@@ -161,7 +161,7 @@
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
         "x": 1480,
-        "y": 460,
+        "y": 520,
         "wires": []
     },
     {
@@ -181,7 +181,7 @@
         "name": "Push Messages From Discord to the MQTT broker",
         "info": "",
         "x": 270,
-        "y": 440,
+        "y": 500,
         "wires": []
     },
     {
@@ -191,7 +191,7 @@
         "name": "Actions Directed From MQTT Broker",
         "info": "",
         "x": 220,
-        "y": 660,
+        "y": 720,
         "wires": []
     },
     {
@@ -211,7 +211,7 @@
         "name": "Only forward messages from the patiolights channel",
         "info": "",
         "x": 550,
-        "y": 500,
+        "y": 560,
         "wires": []
     },
     {
@@ -221,7 +221,7 @@
         "name": "Run the RF transmit script",
         "info": "",
         "x": 510,
-        "y": 680,
+        "y": 740,
         "wires": []
     },
     {
@@ -231,7 +231,7 @@
         "name": "Report the topic update to Discord ",
         "info": "",
         "x": 1440,
-        "y": 880,
+        "y": 940,
         "wires": []
     },
     {
@@ -255,7 +255,7 @@
         "reduceInitType": "num",
         "reduceFixup": "",
         "x": 690,
-        "y": 840,
+        "y": 900,
         "wires": [
             [
                 "df11384755fdd4db"
@@ -282,7 +282,7 @@
         "to": "",
         "reg": false,
         "x": 490,
-        "y": 840,
+        "y": 900,
         "wires": [
             [
                 "e21f652302872085"
@@ -316,7 +316,7 @@
         "to": "",
         "reg": false,
         "x": 890,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
                 "e21f652302872085"
@@ -344,7 +344,7 @@
         "repair": false,
         "outputs": 2,
         "x": 840,
-        "y": 940,
+        "y": 1000,
         "wires": [
             [
                 "d73445616a9ea577"
@@ -362,7 +362,7 @@
         "channel": "",
         "token": "",
         "x": 1420,
-        "y": 960,
+        "y": 1020,
         "wires": []
     },
     {
@@ -379,7 +379,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1390,
-        "y": 920,
+        "y": 980,
         "wires": []
     },
     {
@@ -423,7 +423,7 @@
         "to": "",
         "reg": false,
         "x": 1080,
-        "y": 920,
+        "y": 980,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -465,7 +465,7 @@
         "to": "",
         "reg": false,
         "x": 1070,
-        "y": 960,
+        "y": 1020,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -480,7 +480,7 @@
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
         "x": 1020,
-        "y": 880,
+        "y": 940,
         "wires": []
     },
     {
@@ -495,7 +495,7 @@
         "finalize": "",
         "libs": [],
         "x": 840,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "c8463ca6e32ddd3b"
@@ -514,7 +514,7 @@
         "finalize": "",
         "libs": [],
         "x": 1100,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "dcf306373b2971b1"
@@ -540,7 +540,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1290,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "a7c76488b51676d9",
@@ -579,7 +579,7 @@
         "to": "",
         "reg": false,
         "x": 1510,
-        "y": 560,
+        "y": 620,
         "wires": [
             [
                 "5e391731b81c7ab2"
@@ -594,7 +594,7 @@
         "channel": "",
         "token": "",
         "x": 1820,
-        "y": 540,
+        "y": 600,
         "wires": []
     },
     {
@@ -652,7 +652,7 @@
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
         "x": 590,
-        "y": 800,
+        "y": 860,
         "wires": []
     },
     {
@@ -682,7 +682,7 @@
         "to": "",
         "reg": false,
         "x": 1510,
-        "y": 520,
+        "y": 580,
         "wires": [
             [
                 "5e391731b81c7ab2"
@@ -702,7 +702,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1450,
-        "y": 620,
+        "y": 680,
         "wires": []
     },
     {
@@ -711,7 +711,7 @@
         "z": "8d56d03bea1b2724",
         "name": "Dynamic Lights-On Time (based on sunset time)",
         "info": "",
-        "x": 260,
+        "x": 280,
         "y": 320,
         "wires": []
     },
@@ -719,7 +719,7 @@
         "id": "f18418e82d3d9478",
         "type": "http request",
         "z": "8d56d03bea1b2724",
-        "name": "",
+        "name": "HTTP request timeanddate.com",
         "method": "GET",
         "ret": "txt",
         "paytoqs": "ignore",
@@ -730,7 +730,7 @@
         "insecureHTTPParser": false,
         "authType": "",
         "senderr": false,
-        "x": 470,
+        "x": 490,
         "y": 360,
         "wires": [
             [
@@ -742,7 +742,7 @@
         "id": "ca1993b75848d0a8",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "1am Daily Sunset Check",
+        "name": "1am Daily Inject",
         "props": [
             {
                 "p": "payload"
@@ -755,7 +755,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 250,
+        "x": 230,
         "y": 360,
         "wires": [
             [
@@ -767,13 +767,13 @@
         "id": "692546f9eb4d3713",
         "type": "html",
         "z": "8d56d03bea1b2724",
-        "name": "",
+        "name": "Find <td> html elements",
         "property": "payload",
         "outproperty": "payload",
         "tag": "td",
         "ret": "html",
         "as": "single",
-        "x": 630,
+        "x": 750,
         "y": 360,
         "wires": [
             [
@@ -782,26 +782,10 @@
         ]
     },
     {
-        "id": "524d73b5e0126725",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 810,
-        "y": 320,
-        "wires": []
-    },
-    {
         "id": "70d5d6da5746c3d6",
         "type": "change",
         "z": "8d56d03bea1b2724",
-        "name": "",
+        "name": "Extract sunset time",
         "rules": [
             {
                 "t": "set",
@@ -816,11 +800,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
+        "x": 970,
         "y": 360,
         "wires": [
             [
-                "524d73b5e0126725",
                 "242e599e4e290ce7"
             ]
         ]
@@ -836,37 +819,19 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
+        "x": 1190,
         "y": 360,
         "wires": [
             [
-                "c2683d0af16a68ad",
                 "88839e9f3255771c"
             ]
         ]
     },
     {
-        "id": "c2683d0af16a68ad",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1070,
-        "y": 320,
-        "wires": []
-    },
-    {
         "id": "88839e9f3255771c",
         "type": "delay",
         "z": "8d56d03bea1b2724",
-        "name": "",
+        "name": "Set Delay",
         "pauseType": "delayv",
         "timeout": "5",
         "timeoutUnits": "seconds",
@@ -879,7 +844,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1240,
+        "x": 1380,
         "y": 360,
         "wires": [
             [
@@ -891,7 +856,7 @@
         "id": "d6f387d14c300b4f",
         "type": "change",
         "z": "8d56d03bea1b2724",
-        "name": "",
+        "name": "Set msg.payload to \"on\"",
         "rules": [
             {
                 "t": "set",
@@ -906,11 +871,36 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1420,
+        "x": 1570,
         "y": 360,
         "wires": [
             [
                 "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "ccf8dcca32c8b45e",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "On Startup Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "f18418e82d3d9478"
             ]
         ]
     },
