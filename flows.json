@@ -734,7 +734,7 @@
         "y": 360,
         "wires": [
             [
-                "692546f9eb4d3713"
+                "d8034cce354905bb"
             ]
         ]
     },
@@ -773,8 +773,8 @@
         "tag": "td",
         "ret": "html",
         "as": "single",
-        "x": 750,
-        "y": 360,
+        "x": 990,
+        "y": 340,
         "wires": [
             [
                 "70d5d6da5746c3d6"
@@ -800,8 +800,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 970,
-        "y": 360,
+        "x": 1210,
+        "y": 340,
         "wires": [
             [
                 "242e599e4e290ce7"
@@ -819,7 +819,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1190,
+        "x": 1430,
         "y": 360,
         "wires": [
             [
@@ -844,7 +844,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1380,
+        "x": 1620,
         "y": 360,
         "wires": [
             [
@@ -871,7 +871,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1570,
+        "x": 1810,
         "y": 360,
         "wires": [
             [
@@ -901,6 +901,64 @@
         "wires": [
             [
                 "f18418e82d3d9478"
+            ]
+        ]
+    },
+    {
+        "id": "d8034cce354905bb",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check for 200 status code",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 360,
+        "wires": [
+            [
+                "692546f9eb4d3713"
+            ],
+            [
+                "e479e48241f2b6a8"
+            ]
+        ]
+    },
+    {
+        "id": "e479e48241f2b6a8",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set on-time of 4:30 pm",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4:30 pm",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1200,
+        "y": 380,
+        "wires": [
+            [
+                "242e599e4e290ce7"
             ]
         ]
     },
