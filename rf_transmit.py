@@ -33,7 +33,7 @@ NIGHTLIGHT_ARGS = {
 }
 
 DEVICE_ARGS = {
-    'patio': PATIO_ARGS,
+    'patiolights': PATIO_ARGS,
     'nightlight': NIGHTLIGHT_ARGS
 }
 
@@ -57,13 +57,13 @@ def transmit_code(code):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Control RF patio lights',
+        description='Control RF lights',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=f"""
 Examples:
-    %(prog)s patio on
+    %(prog)s patiolights on
     %(prog)s nightlight off
-    %(prog)s patio party
+    %(prog)s patiolights party
     """
     )
     
