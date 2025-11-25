@@ -1,0 +1,1169 @@
+[
+    {
+        "id": "8d56d03bea1b2724",
+        "type": "tab",
+        "label": "SmartHubFlow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "091e3e1b01889a61",
+        "type": "mqtt in",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker RF",
+        "topic": "rf",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "8edadf0ceb978ad1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 860,
+        "wires": [
+            [
+                "b41a933079a06993",
+                "6be36868010be007"
+            ]
+        ]
+    },
+    {
+        "id": "093349a6f7ad70a9",
+        "type": "exec",
+        "z": "8d56d03bea1b2724",
+        "command": "python ~/mu_code/scripts/rf_transmit.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 740,
+        "y": 860,
+        "wires": [
+            [],
+            [],
+            [
+                "cb338c2a9aa63b02"
+            ]
+        ]
+    },
+    {
+        "id": "61bdbbb77aceb7cc",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "d": true,
+        "name": "6pm Lights On",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 18 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"on\"}",
+        "payloadType": "str",
+        "x": 220,
+        "y": 260,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "0a8b46906abfc42d",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "2am Lights Off",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 02 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "70d7f39b7a276e66",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Daily Schedule",
+        "info": "",
+        "x": 160,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b662ec359327780f",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Actions Directed From MQTT Broker",
+        "info": "",
+        "x": 220,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "d53697109b5e96ef",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Run the RF transmit script",
+        "info": "",
+        "x": 650,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "05b233f3630e4536",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Report the topic update to Discord ",
+        "info": "",
+        "x": 1660,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "cb338c2a9aa63b02",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Prep for join",
+        "rules": [
+            {
+                "t": "set",
+                "p": "join",
+                "pt": "msg",
+                "to": "code",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.code",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 940,
+        "wires": [
+            [
+                "69facfd07e9d2cf5"
+            ]
+        ]
+    },
+    {
+        "id": "80fd4f6f507b9483",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1680,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "6655c2ea2d120e45",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1650,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "a2e30648c8f1db00",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Failure Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "code",
+                "pt": "msg",
+                "to": "payload.code",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Error transmitting RF signal",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 1100,
+        "wires": [
+            [
+                "80fd4f6f507b9483",
+                "6655c2ea2d120e45"
+            ]
+        ]
+    },
+    {
+        "id": "306a0c3bc7fc3982",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Determine a Discord message based on exec exit code",
+        "info": "",
+        "x": 1160,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "b9254c801a6b7f22",
+        "type": "mqtt out",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker RF",
+        "topic": "rf",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8edadf0ceb978ad1",
+        "x": 500,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8fd42c7d04920c33",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "8am Lights Off",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "d443ceea2f37209c",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Join the MQTT message with the output of the exec",
+        "info": "",
+        "x": 730,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "5d54103f57cdff78",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Dynamic Lights-On Time (based on sunset time)",
+        "info": "",
+        "x": 280,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f18418e82d3d9478",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "HTTP request timeanddate.com",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.timeanddate.com/sun/usa/bend",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "d8034cce354905bb"
+            ]
+        ]
+    },
+    {
+        "id": "ca1993b75848d0a8",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "1am Daily Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 01 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "f18418e82d3d9478"
+            ]
+        ]
+    },
+    {
+        "id": "692546f9eb4d3713",
+        "type": "html",
+        "z": "8d56d03bea1b2724",
+        "name": "Find <td> html elements",
+        "property": "payload",
+        "outproperty": "payload",
+        "tag": "td",
+        "ret": "html",
+        "as": "single",
+        "x": 990,
+        "y": 340,
+        "wires": [
+            [
+                "70d5d6da5746c3d6"
+            ]
+        ]
+    },
+    {
+        "id": "70d5d6da5746c3d6",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Extract sunset time",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$split(msg.payload[6], \"<\", 1)[0]\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 340,
+        "wires": [
+            [
+                "242e599e4e290ce7"
+            ]
+        ]
+    },
+    {
+        "id": "242e599e4e290ce7",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "calculateDelayToSunset",
+        "func": "// ----------------------------------------------------------\n// INPUT : msg.payload = \"6:03 pm\"   (or \"18:03\")\n// OUTPUT: msg.delay   = milliseconds until the next sunset\n// ----------------------------------------------------------\n\n/**\n * Convert a sunset string (\"h:mm am|pm\") into a Date object for today.\n * If the parsed time is already in the past, we roll forward to tomorrow.\n * Via Lumo AI\n */\nfunction getSunsetTimestamp(sunsetStr) {\n    // Normalise the string: trim, lower‑case, collapse extra spaces\n    const s = sunsetStr.trim().toLowerCase();\n\n    // Split into time part and optional meridiem (am/pm)\n    const parts = s.split(/\\s+/);               // [\"6:03\", \"pm\"]  or [\"18:03\"]\n    const timePart = parts[0];                  // \"6:03\" or \"18:03\"\n    const meridiem = parts[1] || null;          // \"pm\" or undefined\n\n    // Separate hour and minute\n    const [hourStr, minuteStr] = timePart.split(':');\n    let hour   = parseInt(hourStr, 10);\n    const minute = parseInt(minuteStr, 10);\n\n    // If we have an am/pm marker, convert to 24‑hour clock\n    if (meridiem) {\n        if (meridiem === 'pm' && hour < 12) hour += 12;\n        if (meridiem === 'am' && hour === 12) hour = 0; // 12 am → 0 h\n    }\n\n    // Build a Date for *today* in the local time zone\n    const now = new Date();\n    const sunsetToday = new Date(\n        now.getFullYear(),\n        now.getMonth(),      // month index 0‑11\n        now.getDate(),\n        hour,\n        minute,\n        0,                   // seconds\n        0                    // ms\n    );\n\n    // If that moment is already past, move it to tomorrow\n    if (sunsetToday.getTime() <= now.getTime()) {\n        sunsetToday.setDate(sunsetToday.getDate() + 1);\n    }\n\n    return sunsetToday.getTime(); // ms since epoch\n}\n\n// ------------------------------------------------------------------\n// Main body of the Function node\n// ------------------------------------------------------------------\nconst sunsetString = msg.payload;               // e.g. \"6:03 pm\"\nconst nowMs        = Date.now();                // current timestamp\nconst sunsetMs     = getSunsetTimestamp(sunsetString);\n\n// Compute the delay (always non‑negative)\nconst delayMs = Math.max(0, sunsetMs - nowMs);\n\n// Put the result where the downstream Delay node expects it.\n// By default the Delay node looks at msg.delay, but you can change the property in its config.\nmsg.delay = delayMs;\n\n// Optional: keep some diagnostics handy for debugging\nmsg.sunsetTimestamp = sunsetMs;\nmsg.currentTimestamp = nowMs;\nmsg.debug = {\n    sunsetString,\n    delayMs,\n    // Human‑readable versions\n    sunsetISO: new Date(sunsetMs).toISOString(),\n    nowISO   : new Date(nowMs).toISOString()\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1430,
+        "y": 360,
+        "wires": [
+            [
+                "88839e9f3255771c"
+            ]
+        ]
+    },
+    {
+        "id": "88839e9f3255771c",
+        "type": "delay",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1620,
+        "y": 360,
+        "wires": [
+            [
+                "d6f387d14c300b4f"
+            ]
+        ]
+    },
+    {
+        "id": "d6f387d14c300b4f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set msg.payload to \"on\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":\"patiolights\",\"command\":\"on\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1810,
+        "y": 360,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "ccf8dcca32c8b45e",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "On Startup Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "f18418e82d3d9478"
+            ]
+        ]
+    },
+    {
+        "id": "d8034cce354905bb",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check for 200 status code",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 360,
+        "wires": [
+            [
+                "692546f9eb4d3713"
+            ],
+            [
+                "e479e48241f2b6a8"
+            ]
+        ]
+    },
+    {
+        "id": "e479e48241f2b6a8",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set on-time of 4:30 pm",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "4:30 pm",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1200,
+        "y": 380,
+        "wires": [
+            [
+                "242e599e4e290ce7"
+            ]
+        ]
+    },
+    {
+        "id": "b41a933079a06993",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Extract Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$join([msg.payload.device, \" \", msg.payload.command])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 860,
+        "wires": [
+            [
+                "093349a6f7ad70a9"
+            ]
+        ]
+    },
+    {
+        "id": "6be36868010be007",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Prep for join",
+        "rules": [
+            {
+                "t": "set",
+                "p": "join",
+                "pt": "msg",
+                "to": "mqtt",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 940,
+        "wires": [
+            [
+                "69facfd07e9d2cf5"
+            ]
+        ]
+    },
+    {
+        "id": "69facfd07e9d2cf5",
+        "type": "join",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "join",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 750,
+        "y": 1000,
+        "wires": [
+            [
+                "c2bd8776944f0918"
+            ]
+        ]
+    },
+    {
+        "id": "072a428601ccee74",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setSuccessMessageDetails",
+        "func": "let device = msg.payload.mqtt.device\nlet command = msg.payload.mqtt.command\nlet msgTxt = \"\"\nlet channel = \"\"\n\nif (device === \"patiolights\") {\n    msgTxt = `The patio lights are now ${command}`\n    channel = \"1403543416435900457\"\n} else if (device === \"nightlight\") {\n    msgTxt = `The nightlight is now ${command}`\n    channel = \"1442345161056063663\"\n}\n\nmsg.payload.txt = msgTxt\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 1060,
+        "wires": [
+            [
+                "565e507ff7a4fd27"
+            ]
+        ]
+    },
+    {
+        "id": "c2bd8776944f0918",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "If exit code is 0",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 900,
+        "y": 1080,
+        "wires": [
+            [
+                "072a428601ccee74"
+            ],
+            [
+                "a5b84f29e4215b5a"
+            ]
+        ]
+    },
+    {
+        "id": "565e507ff7a4fd27",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Success Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.txt",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1400,
+        "y": 1060,
+        "wires": [
+            [
+                "6655c2ea2d120e45",
+                "80fd4f6f507b9483"
+            ]
+        ]
+    },
+    {
+        "id": "a5b84f29e4215b5a",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setFailMessageChannel",
+        "func": "let device = msg.payload.mqtt.device\nlet channel = \"\"\n\nif (device === \"patiolights\") {\n    channel = \"1403543416435900457\"\n} else if (device === \"nightlight\") {\n    channel = \"1442345161056063663\"\n}\n\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1130,
+        "y": 1100,
+        "wires": [
+            [
+                "a2e30648c8f1db00"
+            ]
+        ]
+    },
+    {
+        "id": "37710547eb6b85aa",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "RF Lights",
+        "info": "",
+        "x": 80,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e51c787ac0a0df7d",
+        "type": "discordMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "token": "",
+        "x": 220,
+        "y": 680,
+        "wires": [
+            [
+                "8148d7d53bacb66f"
+            ]
+        ]
+    },
+    {
+        "id": "7f2885e25ecae748",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Channel Options",
+        "property": "channel.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "patiolights",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nightlight",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 710,
+        "y": 680,
+        "wires": [
+            [
+                "f770412de26dd32e"
+            ],
+            [
+                "f770412de26dd32e"
+            ]
+        ]
+    },
+    {
+        "id": "81534acb6c087c1e",
+        "type": "mqtt out",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker RF",
+        "topic": "rf",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8edadf0ceb978ad1",
+        "x": 1560,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e3787288f9da2abb",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Push Messages From Discord to the MQTT broker",
+        "info": "",
+        "x": 270,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "00c4aedef0365b96",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Only push messages from valid channels",
+        "info": "",
+        "x": 800,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "8148d7d53bacb66f",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "msg.payload.toLowerCase",
+        "func": "msg.payload = msg.payload.toLowerCase()\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 680,
+        "wires": [
+            [
+                "7f2885e25ecae748"
+            ]
+        ]
+    },
+    {
+        "id": "f770412de26dd32e",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "checkValidCommand",
+        "func": "const validCommands = flow.get('validCommands')\nconst validPatioCommands = validCommands.patiolights\nconst validNightlightCommands = validCommands.nightlight\n\nconst device = msg.channel.name\n\nif (device === \"patiolights\") {\n    msg.validCommand = validPatioCommands.includes(msg.payload)\n} else if (device === \"nightlight\") {\n    msg.validCommand = validNightlightCommands.includes(msg.payload)\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 680,
+        "wires": [
+            [
+                "486a900a8c17ad06"
+            ]
+        ]
+    },
+    {
+        "id": "486a900a8c17ad06",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "validCommand",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1130,
+        "y": 680,
+        "wires": [
+            [
+                "1dd697164e2d477a",
+                "2e9dd91802527c2b"
+            ],
+            [
+                "be9cf46b01aaae82"
+            ]
+        ]
+    },
+    {
+        "id": "d43c347577dbcad7",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1960,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ae0aee48af4e5d1b",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Valid Command Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "channel.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1630,
+        "y": 660,
+        "wires": [
+            [
+                "d43c347577dbcad7"
+            ]
+        ]
+    },
+    {
+        "id": "1dd697164e2d477a",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set MQTT Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":msg.channel.name,\"command\": msg.payload}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1350,
+        "y": 600,
+        "wires": [
+            [
+                "81534acb6c087c1e"
+            ]
+        ]
+    },
+    {
+        "id": "717a424166aa81a6",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 540,
+        "wires": [
+            [
+                "93bf5b9151a50333"
+            ]
+        ]
+    },
+    {
+        "id": "93bf5b9151a50333",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "validCommands",
+                "pt": "flow",
+                "to": "{\"patiolights\":[\"on\",\"off\",\"white\",\"red\",\"blue\",\"green\",\"up\",\"down\",\"party\",\"fast\",\"slow\"],\"nightlight\":[\"on\",\"off\"]}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b609f44272f0c28",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Invalid Command Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "channel.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1690,
+        "y": 700,
+        "wires": [
+            [
+                "d43c347577dbcad7"
+            ]
+        ]
+    },
+    {
+        "id": "c1c1f97680b577fd",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "validCommandDescriptions",
+                "pt": "flow",
+                "to": "{\"patiolights\":\"\\nValid commands:\\n- on\\n- off\\n- white\\n- red\\n- blue\\n- green\\n- up (in brightness; does not consistently work)\\n- down (in brightness; does not consistently work)\\n- party (send multiple times to get different patterns)\\n- fast (take the party up a notch)\\n- slow (take the party down a notch)\",\"nightlight\":\"\\nValid commands:\\n- on\\n- off\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be9cf46b01aaae82",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatInvalidCommandMessage",
+        "func": "let givenCommand = msg.payload\nconst device = msg.channel.name\nconst validCommandDescriptions = flow.get('validCommandDescriptions')\nconst validDeviceCommandDescriptions = validCommandDescriptions[device]\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validDeviceCommandDescriptions}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 700,
+        "wires": [
+            [
+                "3b609f44272f0c28"
+            ]
+        ]
+    },
+    {
+        "id": "185123374dc4b074",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 600,
+        "wires": [
+            [
+                "c1c1f97680b577fd"
+            ]
+        ]
+    },
+    {
+        "id": "2e9dd91802527c2b",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatSuccessMessage",
+        "func": "let command = msg.payload\nlet device = msg.channel.name\nlet deviceName = \"\"\n\nif (device === \"patiolights\") {\n    deviceName = \"patio lights\"\n} else {\n    deviceName = device\n}\n\nmsg.payload = `Updating the ${deviceName} to ${command}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 660,
+        "wires": [
+            [
+                "ae0aee48af4e5d1b"
+            ]
+        ]
+    },
+    {
+        "id": "8edadf0ceb978ad1",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
