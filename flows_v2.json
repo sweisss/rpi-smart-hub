@@ -21,7 +21,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 190,
-        "y": 860,
+        "y": 800,
         "wires": [
             [
                 "b41a933079a06993",
@@ -42,7 +42,7 @@
         "oldrc": false,
         "name": "",
         "x": 740,
-        "y": 860,
+        "y": 820,
         "wires": [
             [],
             [],
@@ -119,7 +119,7 @@
         "name": "Actions Directed From MQTT Broker",
         "info": "",
         "x": 220,
-        "y": 800,
+        "y": 760,
         "wires": []
     },
     {
@@ -129,7 +129,7 @@
         "name": "Run the RF transmit script",
         "info": "",
         "x": 650,
-        "y": 820,
+        "y": 780,
         "wires": []
     },
     {
@@ -139,7 +139,7 @@
         "name": "Report the topic update to Discord ",
         "info": "",
         "x": 1660,
-        "y": 1020,
+        "y": 960,
         "wires": []
     },
     {
@@ -169,7 +169,7 @@
         "to": "",
         "reg": false,
         "x": 1030,
-        "y": 940,
+        "y": 880,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -184,7 +184,7 @@
         "channel": "",
         "token": "",
         "x": 1680,
-        "y": 1100,
+        "y": 1040,
         "wires": []
     },
     {
@@ -201,7 +201,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1650,
-        "y": 1060,
+        "y": 1000,
         "wires": []
     },
     {
@@ -231,7 +231,7 @@
         "to": "",
         "reg": false,
         "x": 1390,
-        "y": 1100,
+        "y": 1040,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -246,7 +246,7 @@
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
         "x": 1160,
-        "y": 1020,
+        "y": 960,
         "wires": []
     },
     {
@@ -299,7 +299,7 @@
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
         "x": 730,
-        "y": 940,
+        "y": 880,
         "wires": []
     },
     {
@@ -579,7 +579,7 @@
         "to": "",
         "reg": false,
         "x": 380,
-        "y": 860,
+        "y": 800,
         "wires": [
             [
                 "093349a6f7ad70a9"
@@ -606,7 +606,7 @@
         "to": "",
         "reg": false,
         "x": 370,
-        "y": 940,
+        "y": 900,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -634,7 +634,7 @@
         "reduceInitType": "num",
         "reduceFixup": "",
         "x": 750,
-        "y": 1000,
+        "y": 940,
         "wires": [
             [
                 "c2bd8776944f0918"
@@ -653,7 +653,7 @@
         "finalize": "",
         "libs": [],
         "x": 1140,
-        "y": 1060,
+        "y": 1000,
         "wires": [
             [
                 "565e507ff7a4fd27"
@@ -681,7 +681,7 @@
         "repair": false,
         "outputs": 2,
         "x": 900,
-        "y": 1080,
+        "y": 1020,
         "wires": [
             [
                 "072a428601ccee74"
@@ -711,7 +711,7 @@
         "to": "",
         "reg": false,
         "x": 1400,
-        "y": 1060,
+        "y": 1000,
         "wires": [
             [
                 "6655c2ea2d120e45",
@@ -731,7 +731,7 @@
         "finalize": "",
         "libs": [],
         "x": 1130,
-        "y": 1100,
+        "y": 1040,
         "wires": [
             [
                 "a2e30648c8f1db00"
@@ -755,7 +755,7 @@
         "name": "",
         "token": "",
         "x": 220,
-        "y": 680,
+        "y": 660,
         "wires": [
             [
                 "8148d7d53bacb66f"
@@ -766,7 +766,7 @@
         "id": "7f2885e25ecae748",
         "type": "switch",
         "z": "8d56d03bea1b2724",
-        "name": "Channel Options",
+        "name": "Filter Channels",
         "property": "channel.name",
         "propertyType": "msg",
         "rules": [
@@ -784,8 +784,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 710,
-        "y": 680,
+        "x": 700,
+        "y": 660,
         "wires": [
             [
                 "f770412de26dd32e"
@@ -809,8 +809,8 @@
         "correl": "",
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
-        "x": 1560,
-        "y": 600,
+        "x": 1520,
+        "y": 580,
         "wires": []
     },
     {
@@ -820,7 +820,7 @@
         "name": "Push Messages From Discord to the MQTT broker",
         "info": "",
         "x": 270,
-        "y": 500,
+        "y": 480,
         "wires": []
     },
     {
@@ -830,7 +830,7 @@
         "name": "Only push messages from valid channels",
         "info": "",
         "x": 800,
-        "y": 640,
+        "y": 620,
         "wires": []
     },
     {
@@ -845,7 +845,7 @@
         "finalize": "",
         "libs": [],
         "x": 460,
-        "y": 680,
+        "y": 660,
         "wires": [
             [
                 "7f2885e25ecae748"
@@ -857,14 +857,14 @@
         "type": "function",
         "z": "8d56d03bea1b2724",
         "name": "checkValidCommand",
-        "func": "const validCommands = flow.get('validCommands')\nconst validPatioCommands = validCommands.patiolights\nconst validNightlightCommands = validCommands.nightlight\n\nconst device = msg.channel.name\n\nif (device === \"patiolights\") {\n    msg.validCommand = validPatioCommands.includes(msg.payload)\n} else if (device === \"nightlight\") {\n    msg.validCommand = validNightlightCommands.includes(msg.payload)\n}\n\nreturn msg;\n",
+        "func": "const validCommands = flow.get('validCommands')\nconst device = msg.channel.name\n\nmsg.validCommand = validCommands[device].includes(msg.payload)\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 940,
-        "y": 680,
+        "x": 920,
+        "y": 660,
         "wires": [
             [
                 "486a900a8c17ad06"
@@ -889,8 +889,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1130,
-        "y": 680,
+        "x": 1090,
+        "y": 660,
         "wires": [
             [
                 "1dd697164e2d477a",
@@ -908,8 +908,8 @@
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1960,
-        "y": 680,
+        "x": 1920,
+        "y": 660,
         "wires": []
     },
     {
@@ -931,8 +931,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1630,
-        "y": 660,
+        "x": 1650,
+        "y": 640,
         "wires": [
             [
                 "d43c347577dbcad7"
@@ -958,8 +958,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1350,
-        "y": 600,
+        "x": 1310,
+        "y": 580,
         "wires": [
             [
                 "81534acb6c087c1e"
@@ -988,7 +988,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 230,
-        "y": 540,
+        "y": 520,
         "wires": [
             [
                 "93bf5b9151a50333"
@@ -1015,7 +1015,7 @@
         "to": "",
         "reg": false,
         "x": 450,
-        "y": 540,
+        "y": 520,
         "wires": [
             []
         ]
@@ -1039,8 +1039,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1690,
-        "y": 700,
+        "x": 1650,
+        "y": 680,
         "wires": [
             [
                 "d43c347577dbcad7"
@@ -1067,7 +1067,7 @@
         "to": "",
         "reg": false,
         "x": 490,
-        "y": 600,
+        "y": 560,
         "wires": [
             []
         ]
@@ -1077,14 +1077,14 @@
         "type": "function",
         "z": "8d56d03bea1b2724",
         "name": "formatInvalidCommandMessage",
-        "func": "let givenCommand = msg.payload\nconst device = msg.channel.name\nconst validCommandDescriptions = flow.get('validCommandDescriptions')\nconst validDeviceCommandDescriptions = validCommandDescriptions[device]\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validDeviceCommandDescriptions}`\n\nreturn msg;",
+        "func": "const givenCommand = msg.payload\nconst device = msg.channel.name\nconst validCommandDescriptions = flow.get('validCommandDescriptions')\nconst validDeviceCommandDescriptions = validCommandDescriptions[device]\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validDeviceCommandDescriptions}`\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1380,
-        "y": 700,
+        "x": 1340,
+        "y": 680,
         "wires": [
             [
                 "3b609f44272f0c28"
@@ -1113,7 +1113,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 230,
-        "y": 600,
+        "y": 560,
         "wires": [
             [
                 "c1c1f97680b577fd"
@@ -1124,15 +1124,15 @@
         "id": "2e9dd91802527c2b",
         "type": "function",
         "z": "8d56d03bea1b2724",
-        "name": "formatSuccessMessage",
+        "name": "formatValidCommandMessage",
         "func": "let command = msg.payload\nlet device = msg.channel.name\nlet deviceName = \"\"\n\nif (device === \"patiolights\") {\n    deviceName = \"patio lights\"\n} else {\n    deviceName = device\n}\n\nmsg.payload = `Updating the ${deviceName} to ${command}`\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1350,
-        "y": 660,
+        "x": 1330,
+        "y": 640,
         "wires": [
             [
                 "ae0aee48af4e5d1b"
