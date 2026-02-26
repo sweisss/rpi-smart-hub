@@ -21,7 +21,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 190,
-        "y": 860,
+        "y": 900,
         "wires": [
             [
                 "b41a933079a06993",
@@ -41,8 +41,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 740,
-        "y": 880,
+        "x": 660,
+        "y": 900,
         "wires": [
             [],
             [],
@@ -81,7 +81,7 @@
         "id": "0a8b46906abfc42d",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "2am Lights Off",
+        "name": "2 am Lights Off",
         "props": [
             {
                 "p": "payload"
@@ -119,17 +119,7 @@
         "name": "Actions Directed From MQTT Broker",
         "info": "",
         "x": 220,
-        "y": 820,
-        "wires": []
-    },
-    {
-        "id": "d53697109b5e96ef",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Run the RF transmit script",
-        "info": "",
-        "x": 650,
-        "y": 840,
+        "y": 860,
         "wires": []
     },
     {
@@ -139,7 +129,7 @@
         "name": "Report the topic update to Discord ",
         "info": "",
         "x": 1660,
-        "y": 1020,
+        "y": 1060,
         "wires": []
     },
     {
@@ -169,7 +159,7 @@
         "to": "",
         "reg": false,
         "x": 1030,
-        "y": 940,
+        "y": 960,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -184,7 +174,7 @@
         "channel": "",
         "token": "",
         "x": 1680,
-        "y": 1100,
+        "y": 1140,
         "wires": []
     },
     {
@@ -201,7 +191,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1650,
-        "y": 1060,
+        "y": 1100,
         "wires": []
     },
     {
@@ -231,7 +221,7 @@
         "to": "",
         "reg": false,
         "x": 1390,
-        "y": 1100,
+        "y": 1140,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -246,7 +236,7 @@
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
         "x": 1160,
-        "y": 1020,
+        "y": 1060,
         "wires": []
     },
     {
@@ -271,21 +261,21 @@
         "id": "8fd42c7d04920c33",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "8am Lights Off",
+        "name": "7 am Lights Off",
         "props": [
             {
                 "p": "payload"
             }
         ],
         "repeat": "",
-        "crontab": "00 08 * * *",
+        "crontab": "00 07 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
         "payloadType": "json",
         "x": 220,
-        "y": 400,
+        "y": 440,
         "wires": [
             [
                 "b9254c801a6b7f22"
@@ -299,7 +289,7 @@
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
         "x": 730,
-        "y": 940,
+        "y": 980,
         "wires": []
     },
     {
@@ -339,7 +329,7 @@
         "id": "ca1993b75848d0a8",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "1am Daily Inject",
+        "name": "1 am Daily Inject",
         "props": [
             {
                 "p": "payload"
@@ -370,7 +360,7 @@
         "tag": "td",
         "ret": "html",
         "as": "single",
-        "x": 1010,
+        "x": 1030,
         "y": 200,
         "wires": [
             [
@@ -397,7 +387,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
+        "x": 1250,
         "y": 200,
         "wires": [
             [
@@ -410,13 +400,13 @@
         "type": "function",
         "z": "8d56d03bea1b2724",
         "name": "calculateDelayToSunset",
-        "func": "// ----------------------------------------------------------\n// INPUT : msg.payload = \"6:03 pm\"   (or \"18:03\")\n// OUTPUT: msg.delay   = milliseconds until the next sunset\n// ----------------------------------------------------------\n\n/**\n * Convert a sunset string (\"h:mm am|pm\") into a Date object for today.\n * If the parsed time is already in the past, we roll forward to tomorrow.\n * Via Lumo AI\n */\nfunction getSunsetTimestamp(sunsetStr) {\n    // Normalise the string: trim, lower‑case, collapse extra spaces\n    const s = sunsetStr.trim().toLowerCase();\n\n    // Split into time part and optional meridiem (am/pm)\n    const parts = s.split(/\\s+/);               // [\"6:03\", \"pm\"]  or [\"18:03\"]\n    const timePart = parts[0];                  // \"6:03\" or \"18:03\"\n    const meridiem = parts[1] || null;          // \"pm\" or undefined\n\n    // Separate hour and minute\n    const [hourStr, minuteStr] = timePart.split(':');\n    let hour   = parseInt(hourStr, 10);\n    const minute = parseInt(minuteStr, 10);\n\n    // If we have an am/pm marker, convert to 24‑hour clock\n    if (meridiem) {\n        if (meridiem === 'pm' && hour < 12) hour += 12;\n        if (meridiem === 'am' && hour === 12) hour = 0; // 12 am → 0 h\n    }\n\n    // Build a Date for *today* in the local time zone\n    const now = new Date();\n    const sunsetToday = new Date(\n        now.getFullYear(),\n        now.getMonth(),      // month index 0‑11\n        now.getDate(),\n        hour,\n        minute,\n        0,                   // seconds\n        0                    // ms\n    );\n\n    // If that moment is already past, move it to tomorrow\n    if (sunsetToday.getTime() <= now.getTime()) {\n        sunsetToday.setDate(sunsetToday.getDate() + 1);\n    }\n\n    return sunsetToday.getTime(); // ms since epoch\n}\n\n// ------------------------------------------------------------------\n// Main body of the Function node\n// ------------------------------------------------------------------\nconst sunsetString = msg.payload;               // e.g. \"6:03 pm\"\nconst nowMs        = Date.now();                // current timestamp\nconst sunsetMs     = getSunsetTimestamp(sunsetString);\n\n// Compute the delay (always non‑negative)\nconst delayMs = Math.max(0, sunsetMs - nowMs);\n\n// Put the result where the downstream Delay node expects it.\n// By default the Delay node looks at msg.delay, but you can change the property in its config.\nmsg.delay = delayMs;\n\n// Optional: keep some diagnostics handy for debugging\nmsg.sunsetTimestamp = sunsetMs;\nmsg.currentTimestamp = nowMs;\nmsg.debug = {\n    sunsetString,\n    delayMs,\n    // Human‑readable versions\n    sunsetISO: new Date(sunsetMs).toISOString(),\n    nowISO   : new Date(nowMs).toISOString()\n};\n\nreturn msg;",
+        "func": "// ----------------------------------------------------------\n// INPUT : msg.payload = \"6:03 pm\"   (or \"18:03\")\n// OUTPUT: msg.delay   = milliseconds until the next sunset\n// ----------------------------------------------------------\n\n/**\n * Convert a sunset string (\"h:mm am|pm\") into a Date object for today.\n * If the parsed time is already in the past, we roll forward to tomorrow.\n * Via Lumo AI\n */\nfunction getSunsetTimestamp(sunsetStr) {\n    // Normalise the string: trim, lower‑case, collapse extra spaces\n    const s = sunsetStr.trim().toLowerCase();\n\n    // Split into time part and optional meridiem (am/pm)\n    const parts = s.split(/\\s+/);               // [\"6:03\", \"pm\"]  or [\"18:03\"]\n    const timePart = parts[0];                  // \"6:03\" or \"18:03\"\n    const meridiem = parts[1] || null;          // \"pm\" or undefined\n\n    // Separate hour and minute\n    const [hourStr, minuteStr] = timePart.split(':');\n    let hour   = parseInt(hourStr, 10);\n    const minute = parseInt(minuteStr, 10);\n\n    // If we have an am/pm marker, convert to 24‑hour clock\n    if (meridiem) {\n        if (meridiem === 'pm' && hour < 12) hour += 12;\n        if (meridiem === 'am' && hour === 12) hour = 0; // 12 am → 0 h\n    }\n\n    // Build a Date for *today* in the local time zone\n    const now = new Date();\n    const sunsetToday = new Date(\n        now.getFullYear(),\n        now.getMonth(),      // month index 0‑11\n        now.getDate(),\n        hour,\n        minute,\n        0,                   // seconds\n        0                    // ms\n    );\n\n    // If that moment is already past, move it to tomorrow\n    if (sunsetToday.getTime() <= now.getTime()) {\n        sunsetToday.setDate(sunsetToday.getDate() + 1);\n    }\n\n    return sunsetToday.getTime(); // ms since epoch\n}\n\n// ------------------------------------------------------------------\n// Main body of the Function node\n// ------------------------------------------------------------------\nconst sunsetString    = msg.payload;               // e.g. \"6:03 pm\"\nconst nowMs           = Date.now();                // current timestamp\nconst sunsetMs        = getSunsetTimestamp(sunsetString);\nconst minBeforeSunset = 10\nconst msBeforeSunset  = minBeforeSunset * 60 * 1000\n\n// Compute the delay (always non‑negative)\nconst delayMs = Math.max(0, sunsetMs - nowMs - msBeforeSunset);\n\n// Put the result where the downstream Delay node expects it.\n// By default the Delay node looks at msg.delay, but you can change the property in its config.\nmsg.delay = delayMs;\n\n// Optional: keep some diagnostics handy for debugging\nmsg.sunsetTimestamp = sunsetMs;\nmsg.currentTimestamp = nowMs;\nmsg.debug = {\n    sunsetString,\n    delayMs,\n    // Human‑readable versions\n    sunsetISO: new Date(sunsetMs).toISOString(),\n    nowISO   : new Date(nowMs).toISOString()\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1450,
+        "x": 1470,
         "y": 220,
         "wires": [
             [
@@ -441,7 +431,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1640,
+        "x": 1660,
         "y": 220,
         "wires": [
             [
@@ -468,7 +458,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1830,
+        "x": 1850,
         "y": 220,
         "wires": [
             [
@@ -480,7 +470,7 @@
         "id": "ccf8dcca32c8b45e",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "On Startup Inject",
+        "name": "Manual Inject",
         "props": [
             {
                 "p": "payload"
@@ -488,12 +478,12 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
+        "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 250,
+        "x": 230,
         "y": 260,
         "wires": [
             [
@@ -521,7 +511,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 770,
+        "x": 780,
         "y": 220,
         "wires": [
             [
@@ -551,7 +541,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1220,
+        "x": 1230,
         "y": 240,
         "wires": [
             [
@@ -579,7 +569,7 @@
         "to": "",
         "reg": false,
         "x": 380,
-        "y": 860,
+        "y": 900,
         "wires": [
             [
                 "093349a6f7ad70a9"
@@ -606,7 +596,7 @@
         "to": "",
         "reg": false,
         "x": 370,
-        "y": 960,
+        "y": 1040,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -634,7 +624,7 @@
         "reduceInitType": "num",
         "reduceFixup": "",
         "x": 750,
-        "y": 1000,
+        "y": 1040,
         "wires": [
             [
                 "c2bd8776944f0918"
@@ -653,7 +643,7 @@
         "finalize": "",
         "libs": [],
         "x": 1140,
-        "y": 1060,
+        "y": 1100,
         "wires": [
             [
                 "565e507ff7a4fd27"
@@ -681,7 +671,7 @@
         "repair": false,
         "outputs": 2,
         "x": 900,
-        "y": 1080,
+        "y": 1120,
         "wires": [
             [
                 "072a428601ccee74"
@@ -711,7 +701,7 @@
         "to": "",
         "reg": false,
         "x": 1400,
-        "y": 1060,
+        "y": 1100,
         "wires": [
             [
                 "6655c2ea2d120e45",
@@ -731,7 +721,7 @@
         "finalize": "",
         "libs": [],
         "x": 1130,
-        "y": 1100,
+        "y": 1140,
         "wires": [
             [
                 "a2e30648c8f1db00"
@@ -755,7 +745,7 @@
         "name": "",
         "token": "",
         "x": 220,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "8148d7d53bacb66f"
@@ -785,7 +775,7 @@
         "repair": false,
         "outputs": 2,
         "x": 700,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "f770412de26dd32e"
@@ -810,7 +800,7 @@
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
         "x": 1520,
-        "y": 660,
+        "y": 700,
         "wires": []
     },
     {
@@ -820,7 +810,7 @@
         "name": "Push Messages From Discord to the MQTT broker",
         "info": "",
         "x": 270,
-        "y": 580,
+        "y": 620,
         "wires": []
     },
     {
@@ -830,7 +820,7 @@
         "name": "Only push messages from valid channels",
         "info": "",
         "x": 800,
-        "y": 700,
+        "y": 740,
         "wires": []
     },
     {
@@ -845,7 +835,7 @@
         "finalize": "",
         "libs": [],
         "x": 460,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "7f2885e25ecae748"
@@ -864,7 +854,7 @@
         "finalize": "",
         "libs": [],
         "x": 920,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "486a900a8c17ad06"
@@ -890,7 +880,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1090,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "1dd697164e2d477a",
@@ -909,7 +899,7 @@
         "channel": "",
         "token": "",
         "x": 1920,
-        "y": 740,
+        "y": 780,
         "wires": []
     },
     {
@@ -932,7 +922,7 @@
         "to": "",
         "reg": false,
         "x": 1650,
-        "y": 720,
+        "y": 760,
         "wires": [
             [
                 "d43c347577dbcad7"
@@ -959,7 +949,7 @@
         "to": "",
         "reg": false,
         "x": 1310,
-        "y": 660,
+        "y": 700,
         "wires": [
             [
                 "81534acb6c087c1e"
@@ -988,7 +978,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 230,
-        "y": 620,
+        "y": 660,
         "wires": [
             [
                 "93bf5b9151a50333"
@@ -1015,7 +1005,7 @@
         "to": "",
         "reg": false,
         "x": 450,
-        "y": 620,
+        "y": 660,
         "wires": [
             []
         ]
@@ -1040,7 +1030,7 @@
         "to": "",
         "reg": false,
         "x": 1650,
-        "y": 760,
+        "y": 800,
         "wires": [
             [
                 "d43c347577dbcad7"
@@ -1067,7 +1057,7 @@
         "to": "",
         "reg": false,
         "x": 480,
-        "y": 660,
+        "y": 700,
         "wires": [
             []
         ]
@@ -1084,7 +1074,7 @@
         "finalize": "",
         "libs": [],
         "x": 1340,
-        "y": 760,
+        "y": 800,
         "wires": [
             [
                 "3b609f44272f0c28"
@@ -1113,7 +1103,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 230,
-        "y": 660,
+        "y": 700,
         "wires": [
             [
                 "c1c1f97680b577fd"
@@ -1132,7 +1122,7 @@
         "finalize": "",
         "libs": [],
         "x": 1330,
-        "y": 720,
+        "y": 760,
         "wires": [
             [
                 "ae0aee48af4e5d1b"
@@ -1146,7 +1136,7 @@
         "name": "Nightlight",
         "info": "",
         "x": 160,
-        "y": 460,
+        "y": 500,
         "wires": []
     },
     {
@@ -1163,7 +1153,7 @@
         "id": "15bc4b7f3fb880bd",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "5:45am Nightlight On",
+        "name": "5:45 am Nightlight On",
         "props": [
             {
                 "p": "payload"
@@ -1177,7 +1167,32 @@
         "payload": "{\"device\": \"nightlight\", \"command\": \"on\"}",
         "payloadType": "str",
         "x": 240,
-        "y": 500,
+        "y": 540,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "24bd2aa7a9e99014",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "5:55 am Lights On M-Th",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "55 05 * * 1,2,3,4",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"on\"}",
+        "payloadType": "str",
+        "x": 250,
+        "y": 400,
         "wires": [
             [
                 "b9254c801a6b7f22"
