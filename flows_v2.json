@@ -1178,14 +1178,14 @@
         "id": "24bd2aa7a9e99014",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "5:55 am Lights On M-Th",
+        "name": "5:50 am Lights On M-Th",
         "props": [
             {
                 "p": "payload"
             }
         ],
         "repeat": "",
-        "crontab": "55 05 * * 1,2,3,4",
+        "crontab": "50 05 * * 1,2,3,4",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
