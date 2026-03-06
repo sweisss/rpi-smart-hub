@@ -2,9 +2,11 @@ from datetime import datetime
 import matplotlib.pyplot as pyplot
 import RPi.GPIO as GPIO
 
-RECEIVED_SIGNAL = [[], []]  #[[time of reading], [signal reading]]
+
+RECEIVED_SIGNAL = [[], []]  # [[time of reading], [signal reading]]
 MAX_DURATION = 5
-RECEIVE_PIN = 27        # 23 in example
+RECEIVE_PIN = 27
+
 
 if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM)
