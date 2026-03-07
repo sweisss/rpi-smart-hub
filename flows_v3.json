@@ -20,11 +20,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 150,
+        "x": 130,
         "y": 1000,
         "wires": [
             [
-                "52d4f49a1934d753"
+                "b41a933079a06993"
             ]
         ]
     },
@@ -40,13 +40,13 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 1000,
-        "y": 1020,
+        "x": 360,
+        "y": 1140,
         "wires": [
             [],
             [],
             [
-                "cb338c2a9aa63b02"
+                "146c7bbc7f027a84"
             ]
         ]
     },
@@ -96,123 +96,6 @@
         "wires": []
     },
     {
-        "id": "05b233f3630e4536",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Report the topic update to Discord ",
-        "info": "",
-        "x": 1880,
-        "y": 1180,
-        "wires": []
-    },
-    {
-        "id": "cb338c2a9aa63b02",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Prep for join",
-        "rules": [
-            {
-                "t": "set",
-                "p": "join",
-                "pt": "msg",
-                "to": "code",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.code",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1250,
-        "y": 1080,
-        "wires": [
-            [
-                "69facfd07e9d2cf5"
-            ]
-        ]
-    },
-    {
-        "id": "80fd4f6f507b9483",
-        "type": "discordSendMessage",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "channel": "",
-        "token": "",
-        "x": 1900,
-        "y": 1260,
-        "wires": []
-    },
-    {
-        "id": "6655c2ea2d120e45",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1870,
-        "y": 1220,
-        "wires": []
-    },
-    {
-        "id": "a2e30648c8f1db00",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Failure Discord message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "code",
-                "pt": "msg",
-                "to": "payload.code",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "Error transmitting RF signal",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1610,
-        "y": 1260,
-        "wires": [
-            [
-                "80fd4f6f507b9483",
-                "6655c2ea2d120e45"
-            ]
-        ]
-    },
-    {
-        "id": "306a0c3bc7fc3982",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Determine a Discord message based on exec exit code",
-        "info": "",
-        "x": 1380,
-        "y": 1180,
-        "wires": []
-    },
-    {
         "id": "b9254c801a6b7f22",
         "type": "mqtt out",
         "z": "8d56d03bea1b2724",
@@ -254,16 +137,6 @@
                 "b9254c801a6b7f22"
             ]
         ]
-    },
-    {
-        "id": "d443ceea2f37209c",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Join the MQTT message with the output of the exec",
-        "info": "",
-        "x": 950,
-        "y": 1100,
-        "wires": []
     },
     {
         "id": "5d54103f57cdff78",
@@ -530,6 +403,20 @@
         "rules": [
             {
                 "t": "set",
+                "p": "device",
+                "pt": "msg",
+                "to": "payload.device",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "command",
+                "pt": "msg",
+                "to": "payload.command",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
                 "p": "payload",
                 "pt": "msg",
                 "to": "$join([msg.payload.device, \" \", msg.payload.command])",
@@ -541,230 +428,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
+        "x": 340,
         "y": 1020,
         "wires": [
             [
-                "093349a6f7ad70a9"
+                "52d4f49a1934d753"
             ]
         ]
-    },
-    {
-        "id": "6be36868010be007",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Prep for join",
-        "rules": [
-            {
-                "t": "set",
-                "p": "join",
-                "pt": "msg",
-                "to": "mqtt",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 770,
-        "y": 1140,
-        "wires": [
-            [
-                "69facfd07e9d2cf5"
-            ]
-        ]
-    },
-    {
-        "id": "69facfd07e9d2cf5",
-        "type": "join",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "mode": "custom",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "join",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "",
-        "count": "2",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "num",
-        "reduceFixup": "",
-        "x": 970,
-        "y": 1160,
-        "wires": [
-            [
-                "c2bd8776944f0918"
-            ]
-        ]
-    },
-    {
-        "id": "072a428601ccee74",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "setSuccessMessageDetails",
-        "func": "let device = msg.payload.mqtt.device\nlet command = msg.payload.mqtt.command\nlet msgTxt = \"\"\nlet channel = \"\"\n\nif (device === \"patiolights\") {\n    msgTxt = `The patio lights are now ${command}`\n    channel = \"1403543416435900457\"\n} else if (device === \"nightlight\") {\n    msgTxt = `The nightlight is now ${command}`\n    channel = \"1442345161056063663\"\n}\n\nmsg.payload.txt = msgTxt\nmsg.channel = channel\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1360,
-        "y": 1220,
-        "wires": [
-            [
-                "565e507ff7a4fd27"
-            ]
-        ]
-    },
-    {
-        "id": "c2bd8776944f0918",
-        "type": "switch",
-        "z": "8d56d03bea1b2724",
-        "name": "If exit code is 0",
-        "property": "payload.code",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1120,
-        "y": 1240,
-        "wires": [
-            [
-                "072a428601ccee74"
-            ],
-            [
-                "a5b84f29e4215b5a"
-            ]
-        ]
-    },
-    {
-        "id": "565e507ff7a4fd27",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Success Discord message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.txt",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1620,
-        "y": 1220,
-        "wires": [
-            [
-                "6655c2ea2d120e45",
-                "80fd4f6f507b9483"
-            ]
-        ]
-    },
-    {
-        "id": "a5b84f29e4215b5a",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "setFailMessageChannel",
-        "func": "let device = msg.payload.mqtt.device\nlet channel = \"\"\n\nif (device === \"patiolights\") {\n    channel = \"1403543416435900457\"\n} else if (device === \"nightlight\") {\n    channel = \"1442345161056063663\"\n}\n\nmsg.channel = channel\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1350,
-        "y": 1260,
-        "wires": [
-            [
-                "a2e30648c8f1db00"
-            ]
-        ]
-    },
-    {
-        "id": "e51c787ac0a0df7d",
-        "type": "discordMessage",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "token": "",
-        "x": 180,
-        "y": 840,
-        "wires": [
-            [
-                "8148d7d53bacb66f"
-            ]
-        ]
-    },
-    {
-        "id": "7f2885e25ecae748",
-        "type": "switch",
-        "z": "8d56d03bea1b2724",
-        "name": "Filter Channels",
-        "property": "channel.name",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "patiolights",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "nightlight",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 660,
-        "y": 840,
-        "wires": [
-            [
-                "f770412de26dd32e"
-            ],
-            [
-                "f770412de26dd32e"
-            ]
-        ]
-    },
-    {
-        "id": "81534acb6c087c1e",
-        "type": "mqtt out",
-        "z": "8d56d03bea1b2724",
-        "name": "RPi Broker RF",
-        "topic": "rf",
-        "qos": "2",
-        "retain": "true",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "8edadf0ceb978ad1",
-        "x": 1480,
-        "y": 760,
-        "wires": []
     },
     {
         "id": "e3787288f9da2abb",
@@ -773,324 +443,8 @@
         "name": "Push Messages From Discord to the MQTT broker",
         "info": "",
         "x": 230,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "00c4aedef0365b96",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Only push messages from valid channels",
-        "info": "",
-        "x": 760,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "8148d7d53bacb66f",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "msg.payload.toLowerCase",
-        "func": "msg.payload = msg.payload.toLowerCase()\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 840,
-        "wires": [
-            [
-                "7f2885e25ecae748"
-            ]
-        ]
-    },
-    {
-        "id": "f770412de26dd32e",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "checkValidCommand",
-        "func": "const validCommands = flow.get('validCommands')\nconst device = msg.channel.name\n\nmsg.validCommand = validCommands[device].includes(msg.payload)\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 880,
-        "y": 840,
-        "wires": [
-            [
-                "486a900a8c17ad06"
-            ]
-        ]
-    },
-    {
-        "id": "486a900a8c17ad06",
-        "type": "switch",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "property": "validCommand",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1050,
-        "y": 840,
-        "wires": [
-            [
-                "1dd697164e2d477a",
-                "2e9dd91802527c2b"
-            ],
-            [
-                "be9cf46b01aaae82"
-            ]
-        ]
-    },
-    {
-        "id": "d43c347577dbcad7",
-        "type": "discordSendMessage",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "channel": "",
-        "token": "",
-        "x": 1880,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "ae0aee48af4e5d1b",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Set Valid Command Message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "channel",
-                "pt": "msg",
-                "to": "channel.id",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1610,
         "y": 820,
-        "wires": [
-            [
-                "d43c347577dbcad7"
-            ]
-        ]
-    },
-    {
-        "id": "1dd697164e2d477a",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Set MQTT Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"device\":msg.channel.name,\"command\": msg.payload}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1270,
-        "y": 760,
-        "wires": [
-            [
-                "81534acb6c087c1e"
-            ]
-        ]
-    },
-    {
-        "id": "717a424166aa81a6",
-        "type": "inject",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 720,
-        "wires": [
-            [
-                "93bf5b9151a50333"
-            ]
-        ]
-    },
-    {
-        "id": "93bf5b9151a50333",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "validCommands",
-                "pt": "flow",
-                "to": "{\"patiolights\":[\"on\",\"off\",\"white\",\"red\",\"blue\",\"green\",\"up\",\"down\",\"party\",\"fast\",\"slow\"],\"nightlight\":[\"on\",\"off\"]}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 410,
-        "y": 720,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3b609f44272f0c28",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "Set Invalid Command Message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "channel",
-                "pt": "msg",
-                "to": "channel.id",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1610,
-        "y": 860,
-        "wires": [
-            [
-                "d43c347577dbcad7"
-            ]
-        ]
-    },
-    {
-        "id": "c1c1f97680b577fd",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "validCommandDescriptions",
-                "pt": "flow",
-                "to": "{\"patiolights\":\"\\nValid commands:\\n- on\\n- off\\n- white\\n- red\\n- blue\\n- green\\n- up (in brightness; does not consistently work)\\n- down (in brightness; does not consistently work)\\n- party (send multiple times to get different patterns)\\n- fast (take the party up a notch)\\n- slow (take the party down a notch)\",\"nightlight\":\"\\nValid commands:\\n- on\\n- off\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 440,
-        "y": 760,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "be9cf46b01aaae82",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "formatInvalidCommandMessage",
-        "func": "const givenCommand = msg.payload\nconst device = msg.channel.name\nconst validCommandDescriptions = flow.get('validCommandDescriptions')\nconst validDeviceCommandDescriptions = validCommandDescriptions[device]\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validDeviceCommandDescriptions}`\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1300,
-        "y": 860,
-        "wires": [
-            [
-                "3b609f44272f0c28"
-            ]
-        ]
-    },
-    {
-        "id": "185123374dc4b074",
-        "type": "inject",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 760,
-        "wires": [
-            [
-                "c1c1f97680b577fd"
-            ]
-        ]
-    },
-    {
-        "id": "2e9dd91802527c2b",
-        "type": "function",
-        "z": "8d56d03bea1b2724",
-        "name": "formatValidCommandMessage",
-        "func": "let command = msg.payload\nlet device = msg.channel.name\nlet deviceName = \"\"\n\nif (device === \"patiolights\") {\n    deviceName = \"patio lights\"\n} else {\n    deviceName = device\n}\n\nmsg.payload = `Updating the ${deviceName} to ${command}`\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1290,
-        "y": 820,
-        "wires": [
-            [
-                "ae0aee48af4e5d1b"
-            ]
-        ]
+        "wires": []
     },
     {
         "id": "aeaed21119735a76",
@@ -1334,29 +688,13 @@
         "insecureHTTPParser": false,
         "authType": "",
         "senderr": false,
-        "x": 990,
-        "y": 1460,
+        "x": 770,
+        "y": 1400,
         "wires": [
             [
                 "02039af8b6e63f63"
             ]
         ]
-    },
-    {
-        "id": "7f9d5cb6936d4c2a",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1210,
-        "y": 1380,
-        "wires": []
     },
     {
         "id": "124eb303892a923a",
@@ -1375,7 +713,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "\t{\"type\":1,\"id\": $env('PORCHSWITCH_ID'),\"params\":{\"switch\":\"on\"}}",
+                "to": "{\t    \"type\":1,\t    \"id\": $env('PORCHSWITCH_ID'),\t    \"params\":{\t        \"switch\":msg.command\t    }\t}",
                 "tot": "jsonata"
             }
         ],
@@ -1384,8 +722,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 760,
-        "y": 1460,
+        "x": 540,
+        "y": 1400,
         "wires": [
             [
                 "6bc94594d614ff11"
@@ -1403,8 +741,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 530,
-        "y": 1460,
+        "x": 290,
+        "y": 1400,
         "wires": [
             [
                 "124eb303892a923a"
@@ -1416,7 +754,7 @@
         "type": "switch",
         "z": "8d56d03bea1b2724",
         "name": "checkDeviceName",
-        "property": "payload.device",
+        "property": "device",
         "propertyType": "msg",
         "rules": [
             {
@@ -1438,7 +776,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 330,
+        "x": 610,
         "y": 1020,
         "wires": [
             [
@@ -1458,8 +796,8 @@
         "z": "8d56d03bea1b2724",
         "name": "RF Commands",
         "info": "",
-        "x": 700,
-        "y": 980,
+        "x": 200,
+        "y": 1100,
         "wires": []
     },
     {
@@ -1468,83 +806,8 @@
         "z": "8d56d03bea1b2724",
         "name": "HTTP Requests",
         "info": "",
-        "x": 540,
-        "y": 1420,
-        "wires": []
-    },
-    {
-        "id": "a64558d411eeff92",
-        "type": "link in",
-        "z": "8d56d03bea1b2724",
-        "name": "Transmit RF Signal",
-        "links": [
-            "3d23135311ed7473",
-            "be1f68b86c7cd19f"
-        ],
-        "x": 605,
-        "y": 1020,
-        "wires": [
-            [
-                "b41a933079a06993"
-            ]
-        ]
-    },
-    {
-        "id": "38592c054a2282fe",
-        "type": "link in",
-        "z": "8d56d03bea1b2724",
-        "name": "Prep Return Message",
-        "links": [
-            "3d23135311ed7473",
-            "be1f68b86c7cd19f"
-        ],
-        "x": 655,
-        "y": 1140,
-        "wires": [
-            [
-                "6be36868010be007"
-            ]
-        ]
-    },
-    {
-        "id": "be1f68b86c7cd19f",
-        "type": "link out",
-        "z": "8d56d03bea1b2724",
-        "name": "MQTT Patio Lights",
-        "mode": "link",
-        "links": [
-            "a64558d411eeff92",
-            "38592c054a2282fe"
-        ],
-        "x": 485,
-        "y": 980,
-        "wires": []
-    },
-    {
-        "id": "3d23135311ed7473",
-        "type": "link out",
-        "z": "8d56d03bea1b2724",
-        "name": "MQTT Night Light",
-        "mode": "link",
-        "links": [
-            "a64558d411eeff92",
-            "38592c054a2282fe"
-        ],
-        "x": 485,
-        "y": 1020,
-        "wires": []
-    },
-    {
-        "id": "4ce0fda617759d3a",
-        "type": "link out",
-        "z": "8d56d03bea1b2724",
-        "name": "MQTT Front Porch",
-        "mode": "link",
-        "links": [
-            "c67a76bceef3b90e"
-        ],
-        "x": 485,
-        "y": 1060,
+        "x": 200,
+        "y": 1360,
         "wires": []
     },
     {
@@ -1555,8 +818,8 @@
         "links": [
             "4ce0fda617759d3a"
         ],
-        "x": 415,
-        "y": 1460,
+        "x": 175,
+        "y": 1400,
         "wires": [
             [
                 "1d67e4c0e083ba99"
@@ -1571,21 +834,386 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 1150,
-        "y": 1460,
+        "x": 930,
+        "y": 1400,
         "wires": [
             [
-                "7f9d5cb6936d4c2a",
-                "f23fc1af61bee413"
+                "e9e9574e22a2e359"
             ]
         ]
     },
     {
-        "id": "f23fc1af61bee413",
+        "id": "987adaddcfb0bdd0",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 720,
+        "wires": [
+            [
+                "6c0350a609a2919a"
+            ]
+        ]
+    },
+    {
+        "id": "6c0350a609a2919a",
+        "type": "file in",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "filename": "/home/raspberry/SmartHub/devices.json",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 420,
+        "y": 720,
+        "wires": [
+            [
+                "744e4c2634f2661b"
+            ]
+        ]
+    },
+    {
+        "id": "744e4c2634f2661b",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 670,
+        "y": 720,
+        "wires": [
+            [
+                "edc77a4e4a433e2d"
+            ]
+        ]
+    },
+    {
+        "id": "edc77a4e4a433e2d",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "devices",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "112d417202aa8366",
+        "type": "discordMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "token": "",
+        "x": 140,
+        "y": 860,
+        "wires": [
+            [
+                "04ea6bcd2e291086"
+            ]
+        ]
+    },
+    {
+        "id": "9493ebacdcd1a1a8",
         "type": "switch",
         "z": "8d56d03bea1b2724",
-        "name": "checkResponseCode",
-        "property": "payload.error",
+        "name": "Filter Channels",
+        "property": "channel.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "patiolights",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nightlight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "frontporch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 620,
+        "y": 860,
+        "wires": [
+            [
+                "515d4f9a8eb8134d"
+            ],
+            [
+                "515d4f9a8eb8134d"
+            ],
+            [
+                "515d4f9a8eb8134d"
+            ]
+        ]
+    },
+    {
+        "id": "04ea6bcd2e291086",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "msg.payload.toLowerCase",
+        "func": "msg.payload = msg.payload.toLowerCase()\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 860,
+        "wires": [
+            [
+                "9493ebacdcd1a1a8"
+            ]
+        ]
+    },
+    {
+        "id": "515d4f9a8eb8134d",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "checkValidCommand",
+        "func": "const device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommands = devices[device].validCommands\n\nmsg.validCommand = validCommands.includes(msg.payload)\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 860,
+        "wires": [
+            [
+                "dd914ee65484f7bd"
+            ]
+        ]
+    },
+    {
+        "id": "dd914ee65484f7bd",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "validCommand",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1050,
+        "y": 860,
+        "wires": [
+            [
+                "6ec79d0bcfe268c9",
+                "7b5ae0bd6b50edf0"
+            ],
+            [
+                "a622f706234dc728"
+            ]
+        ]
+    },
+    {
+        "id": "5af4a5954ebf8a45",
+        "type": "mqtt out",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker RF",
+        "topic": "rf",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8edadf0ceb978ad1",
+        "x": 1460,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "6ec79d0bcfe268c9",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set MQTT Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":msg.channel.name,\"command\": msg.payload}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 800,
+        "wires": [
+            [
+                "5af4a5954ebf8a45"
+            ]
+        ]
+    },
+    {
+        "id": "7b5ae0bd6b50edf0",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatValidCommandMessage",
+        "func": "let command = msg.payload\nlet device = msg.channel.name\nlet devices = flow.get('devices')\n\nlet deviceName = devices[device].name\n\n\nmsg.payload = `Updating the ${deviceName} to ${command}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 860,
+        "wires": [
+            [
+                "042a44bf31dd8f5f"
+            ]
+        ]
+    },
+    {
+        "id": "a622f706234dc728",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatInvalidCommandMessage",
+        "func": "const givenCommand = msg.payload\nconst device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommandsDesc = devices[device].validCommandsDesc\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validCommandsDesc}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 900,
+        "wires": [
+            [
+                "042a44bf31dd8f5f"
+            ]
+        ]
+    },
+    {
+        "id": "042a44bf31dd8f5f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Reply Channel",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "channel.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1550,
+        "y": 880,
+        "wires": [
+            [
+                "f3c68b63dbb976d5"
+            ]
+        ]
+    },
+    {
+        "id": "f3c68b63dbb976d5",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1780,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "2383d74cd7958c91",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Device Info in a Flow Variable",
+        "info": "",
+        "x": 170,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "146c7bbc7f027a84",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "result.error",
+                "pt": "msg",
+                "to": "payload.code",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 1140,
+        "wires": [
+            [
+                "81687c1d1f4436b8"
+            ]
+        ]
+    },
+    {
+        "id": "81687c1d1f4436b8",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "If exit code is 0",
+        "property": "result.error",
         "propertyType": "msg",
         "rules": [
             {
@@ -1600,99 +1228,97 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1360,
-        "y": 1460,
+        "x": 940,
+        "y": 1260,
         "wires": [
             [
-                "a2f4f8cf6b387cdb"
+                "9b886402dad19c1a"
             ],
             [
-                "86f97f61397aa0d3"
+                "e2edbb35a2dfe130"
             ]
         ]
     },
     {
-        "id": "533c39169a38fc06",
+        "id": "2ad1cd0e10de2afe",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Determine a Discord message based on the results",
+        "info": "",
+        "x": 1250,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "9b886402dad19c1a",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setSuccessMessageDetails",
+        "func": "let device = msg.device\nlet command = msg.command\nlet msgTxt = \"\"\nlet devices = flow.get('devices')\nlet deviceName = devices[device].name\nlet channel = devices[device].channel\nlet lastChar = device.slice(-1)\nlet indicative = lastChar === 's' ? 'are' : 'is'\n\nmsgTxt = `The ${deviceName} ${indicative} now ${command}`\n\nmsg.payload.txt = msgTxt\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 1240,
+        "wires": [
+            [
+                "ec8c7efb6524b02e"
+            ]
+        ]
+    },
+    {
+        "id": "ec8c7efb6524b02e",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Success Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.txt",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1480,
+        "y": 1240,
+        "wires": [
+            [
+                "75ec9d8e93144528",
+                "13d77f74cd8b38bd"
+            ]
+        ]
+    },
+    {
+        "id": "582325e473bd7ff7",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Report the task update to Discord ",
+        "info": "",
+        "x": 1750,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "13d77f74cd8b38bd",
         "type": "discordSendMessage",
         "z": "8d56d03bea1b2724",
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1840,
-        "y": 1460,
+        "x": 1780,
+        "y": 1280,
         "wires": []
     },
     {
-        "id": "a2f4f8cf6b387cdb",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "setSuccessMessage",
-        "rules": [
-            {
-                "t": "set",
-                "p": "channel",
-                "pt": "msg",
-                "to": "1479623106711785646",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "The front porch light is now on",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1600,
-        "y": 1440,
-        "wires": [
-            [
-                "533c39169a38fc06"
-            ]
-        ]
-    },
-    {
-        "id": "86f97f61397aa0d3",
-        "type": "change",
-        "z": "8d56d03bea1b2724",
-        "name": "setFailMessage",
-        "rules": [
-            {
-                "t": "set",
-                "p": "channel",
-                "pt": "msg",
-                "to": "1479623106711785646",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "\"Error updating front porch light: \" & msg.payload",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1580,
-        "y": 1480,
-        "wires": [
-            [
-                "533c39169a38fc06",
-                "4e5cbe806586af8a"
-            ]
-        ]
-    },
-    {
-        "id": "4e5cbe806586af8a",
+        "id": "75ec9d8e93144528",
         "type": "debug",
         "z": "8d56d03bea1b2724",
         "name": "",
@@ -1700,13 +1326,138 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1770,
-        "y": 1540,
+        "x": 1750,
+        "y": 1240,
         "wires": []
+    },
+    {
+        "id": "e2edbb35a2dfe130",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setFailMessageChannel",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 1280,
+        "wires": [
+            [
+                "6ade7695c344d94b"
+            ]
+        ]
+    },
+    {
+        "id": "4ce0fda617759d3a",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Front Porch",
+        "mode": "link",
+        "links": [
+            "c67a76bceef3b90e",
+            "76efa939a5a655e2"
+        ],
+        "x": 765,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "3d23135311ed7473",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Night Light",
+        "mode": "link",
+        "links": [
+            "a64558d411eeff92",
+            "38592c054a2282fe"
+        ],
+        "x": 765,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "be1f68b86c7cd19f",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Patio Lights",
+        "mode": "link",
+        "links": [
+            "a64558d411eeff92",
+            "38592c054a2282fe"
+        ],
+        "x": 765,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "a64558d411eeff92",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Transmit RF Signal",
+        "links": [
+            "3d23135311ed7473",
+            "be1f68b86c7cd19f"
+        ],
+        "x": 175,
+        "y": 1140,
+        "wires": [
+            [
+                "093349a6f7ad70a9"
+            ]
+        ]
+    },
+    {
+        "id": "e9e9574e22a2e359",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "result",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1120,
+        "y": 1400,
+        "wires": [
+            [
+                "81687c1d1f4436b8"
+            ]
+        ]
+    },
+    {
+        "id": "6ade7695c344d94b",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setFailureMessage",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet type = devices[device].controlType\nlet rfMessage = 'Error transmitting RF signal'\n\nmsg.payload = type == 'rf' \n            ? rfMessage\n            : `Error: ${msg.result.error} - ${msg.result.msg}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1490,
+        "y": 1280,
+        "wires": [
+            [
+                "75ec9d8e93144528",
+                "13d77f74cd8b38bd"
+            ]
+        ]
     },
     {
         "id": "8edadf0ceb978ad1",
