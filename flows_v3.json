@@ -1189,10 +1189,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "result.error",
+                "p": "result",
                 "pt": "msg",
-                "to": "payload.code",
-                "tot": "msg"
+                "to": "{\"error\": msg.payload.code, \"msg\": \"Error transmitting RF signal\"}",
+                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -1200,7 +1200,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 710,
+        "x": 700,
         "y": 1140,
         "wires": [
             [
@@ -1349,7 +1349,7 @@
         "y": 1280,
         "wires": [
             [
-                "6ade7695c344d94b"
+                "52520f178945ca10"
             ]
         ]
     },
@@ -1440,17 +1440,25 @@
         ]
     },
     {
-        "id": "6ade7695c344d94b",
-        "type": "function",
+        "id": "52520f178945ca10",
+        "type": "change",
         "z": "8d56d03bea1b2724",
-        "name": "setFailureMessage",
-        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet type = devices[device].controlType\nlet rfMessage = 'Error transmitting RF signal'\n\nmsg.payload = type == 'rf' \n            ? rfMessage\n            : `Error: ${msg.result.error} - ${msg.result.msg}`\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1490,
+        "name": "Failure Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "\"Error: \" & msg.result",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1470,
         "y": 1280,
         "wires": [
             [
