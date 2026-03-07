@@ -15,7 +15,7 @@
 			"fast",
 			"slow"
 		],
-		"validCommandsDesc": "\nValid commands:\n- on\n- off\n- white\n- red\n- blue\n- green\n- up (in brightness; does not consistently work)\n- down (in brightness; does not consistently work)\n- party (send multiple times to get different patterns)\n- fast (take the party up a notch)\n- slow (take the party down a notch)",
+		"validCommandsDesc": "\nValid commands:\n- on\n- off\n- white\n- red\n- blue\n- green\n- up (in brightness; does not consistently work)\n- down (in brightness; does not consistently work)\n- party (send multiple times to get different patterns)\n- fast (take the party up a notch)\n- slow (take the party down a notch)"
 	},
 	"nightlight": {
 		"name": "nightlight",
@@ -28,7 +28,7 @@
 	},
 	"frontporch": {
 		"name": "front porch light",
-		"channel": "1479623106711785646"
+		"channel": "1479623106711785646",
 		"validCommands": [
 			"on",
 			"off"
