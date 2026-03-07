@@ -40,7 +40,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 840,
+        "x": 1000,
         "y": 1020,
         "wires": [
             [],
@@ -101,7 +101,7 @@
         "z": "8d56d03bea1b2724",
         "name": "Report the topic update to Discord ",
         "info": "",
-        "x": 1780,
+        "x": 1880,
         "y": 1180,
         "wires": []
     },
@@ -131,7 +131,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1150,
+        "x": 1250,
         "y": 1080,
         "wires": [
             [
@@ -146,7 +146,7 @@
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1800,
+        "x": 1900,
         "y": 1260,
         "wires": []
     },
@@ -163,7 +163,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1770,
+        "x": 1870,
         "y": 1220,
         "wires": []
     },
@@ -193,7 +193,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1510,
+        "x": 1610,
         "y": 1260,
         "wires": [
             [
@@ -208,7 +208,7 @@
         "z": "8d56d03bea1b2724",
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
-        "x": 1280,
+        "x": 1380,
         "y": 1180,
         "wires": []
     },
@@ -261,7 +261,7 @@
         "z": "8d56d03bea1b2724",
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
-        "x": 850,
+        "x": 950,
         "y": 1100,
         "wires": []
     },
@@ -541,7 +541,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
+        "x": 720,
         "y": 1020,
         "wires": [
             [
@@ -568,7 +568,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 770,
         "y": 1140,
         "wires": [
             [
@@ -596,7 +596,7 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 870,
+        "x": 970,
         "y": 1160,
         "wires": [
             [
@@ -615,7 +615,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1260,
+        "x": 1360,
         "y": 1220,
         "wires": [
             [
@@ -643,7 +643,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1020,
+        "x": 1120,
         "y": 1240,
         "wires": [
             [
@@ -673,7 +673,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1520,
+        "x": 1620,
         "y": 1220,
         "wires": [
             [
@@ -693,7 +693,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1250,
+        "x": 1350,
         "y": 1260,
         "wires": [
             [
@@ -1334,11 +1334,11 @@
         "insecureHTTPParser": false,
         "authType": "",
         "senderr": false,
-        "x": 950,
-        "y": 1320,
+        "x": 990,
+        "y": 1460,
         "wires": [
             [
-                "7f9d5cb6936d4c2a"
+                "02039af8b6e63f63"
             ]
         ]
     },
@@ -1354,8 +1354,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1130,
-        "y": 1320,
+        "x": 1210,
+        "y": 1380,
         "wires": []
     },
     {
@@ -1384,8 +1384,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 1320,
+        "x": 760,
+        "y": 1460,
         "wires": [
             [
                 "6bc94594d614ff11"
@@ -1403,8 +1403,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 490,
-        "y": 1320,
+        "x": 530,
+        "y": 1460,
         "wires": [
             [
                 "124eb303892a923a"
@@ -1442,13 +1442,13 @@
         "y": 1020,
         "wires": [
             [
-                "b41a933079a06993"
+                "be1f68b86c7cd19f"
             ],
             [
-                "6be36868010be007"
+                "3d23135311ed7473"
             ],
             [
-                "1d67e4c0e083ba99"
+                "4ce0fda617759d3a"
             ]
         ]
     },
@@ -1458,7 +1458,7 @@
         "z": "8d56d03bea1b2724",
         "name": "RF Commands",
         "info": "",
-        "x": 540,
+        "x": 700,
         "y": 980,
         "wires": []
     },
@@ -1468,8 +1468,244 @@
         "z": "8d56d03bea1b2724",
         "name": "HTTP Requests",
         "info": "",
-        "x": 500,
-        "y": 1260,
+        "x": 540,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "a64558d411eeff92",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Transmit RF Signal",
+        "links": [
+            "3d23135311ed7473",
+            "be1f68b86c7cd19f"
+        ],
+        "x": 605,
+        "y": 1020,
+        "wires": [
+            [
+                "b41a933079a06993"
+            ]
+        ]
+    },
+    {
+        "id": "38592c054a2282fe",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Prep Return Message",
+        "links": [
+            "3d23135311ed7473",
+            "be1f68b86c7cd19f"
+        ],
+        "x": 655,
+        "y": 1140,
+        "wires": [
+            [
+                "6be36868010be007"
+            ]
+        ]
+    },
+    {
+        "id": "be1f68b86c7cd19f",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Patio Lights",
+        "mode": "link",
+        "links": [
+            "a64558d411eeff92",
+            "38592c054a2282fe"
+        ],
+        "x": 485,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "3d23135311ed7473",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Night Light",
+        "mode": "link",
+        "links": [
+            "a64558d411eeff92",
+            "38592c054a2282fe"
+        ],
+        "x": 485,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "4ce0fda617759d3a",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT Front Porch",
+        "mode": "link",
+        "links": [
+            "c67a76bceef3b90e"
+        ],
+        "x": 485,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "c67a76bceef3b90e",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "links": [
+            "4ce0fda617759d3a"
+        ],
+        "x": 415,
+        "y": 1460,
+        "wires": [
+            [
+                "1d67e4c0e083ba99"
+            ]
+        ]
+    },
+    {
+        "id": "02039af8b6e63f63",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1150,
+        "y": 1460,
+        "wires": [
+            [
+                "7f9d5cb6936d4c2a",
+                "f23fc1af61bee413"
+            ]
+        ]
+    },
+    {
+        "id": "f23fc1af61bee413",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "checkResponseCode",
+        "property": "payload.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1360,
+        "y": 1460,
+        "wires": [
+            [
+                "a2f4f8cf6b387cdb"
+            ],
+            [
+                "86f97f61397aa0d3"
+            ]
+        ]
+    },
+    {
+        "id": "533c39169a38fc06",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1840,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "a2f4f8cf6b387cdb",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "setSuccessMessage",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "1479623106711785646",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "The front porch light is now on",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1600,
+        "y": 1440,
+        "wires": [
+            [
+                "533c39169a38fc06"
+            ]
+        ]
+    },
+    {
+        "id": "86f97f61397aa0d3",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "setFailMessage",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "1479623106711785646",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "\"Error updating front porch light: \" & msg.payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1580,
+        "y": 1480,
+        "wires": [
+            [
+                "533c39169a38fc06",
+                "4e5cbe806586af8a"
+            ]
+        ]
+    },
+    {
+        "id": "4e5cbe806586af8a",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1770,
+        "y": 1540,
         "wires": []
     },
     {
