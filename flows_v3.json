@@ -1191,7 +1191,7 @@
                 "t": "set",
                 "p": "result",
                 "pt": "msg",
-                "to": "{\"error\": msg.payload.code, \"msg\": \"Error transmitting RF signal\"}",
+                "to": "{\"error\": msg.payload.code, \"msg\": \"RF signal transmission failed\"}",
                 "tot": "jsonata"
             }
         ],
@@ -1449,7 +1449,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "\"Error: \" & msg.result",
+                "to": "\"Error: \" & msg.result.error & ' - ' & msg.result.msg",
                 "tot": "jsonata"
             }
         ],
