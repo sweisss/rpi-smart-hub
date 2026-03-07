@@ -21,11 +21,10 @@
         "rh": 0,
         "inputs": 0,
         "x": 150,
-        "y": 980,
+        "y": 1000,
         "wires": [
             [
-                "b41a933079a06993",
-                "6be36868010be007"
+                "52d4f49a1934d753"
             ]
         ]
     },
@@ -41,8 +40,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 600,
-        "y": 980,
+        "x": 840,
+        "y": 1020,
         "wires": [
             [],
             [],
@@ -93,7 +92,7 @@
         "name": "Actions Directed From MQTT Broker",
         "info": "",
         "x": 180,
-        "y": 940,
+        "y": 960,
         "wires": []
     },
     {
@@ -102,8 +101,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Report the topic update to Discord ",
         "info": "",
-        "x": 1620,
-        "y": 1140,
+        "x": 1780,
+        "y": 1180,
         "wires": []
     },
     {
@@ -132,8 +131,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 990,
-        "y": 1040,
+        "x": 1150,
+        "y": 1080,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -147,8 +146,8 @@
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1640,
-        "y": 1220,
+        "x": 1800,
+        "y": 1260,
         "wires": []
     },
     {
@@ -164,8 +163,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1610,
-        "y": 1180,
+        "x": 1770,
+        "y": 1220,
         "wires": []
     },
     {
@@ -194,8 +193,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1350,
-        "y": 1220,
+        "x": 1510,
+        "y": 1260,
         "wires": [
             [
                 "80fd4f6f507b9483",
@@ -209,8 +208,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Determine a Discord message based on exec exit code",
         "info": "",
-        "x": 1120,
-        "y": 1140,
+        "x": 1280,
+        "y": 1180,
         "wires": []
     },
     {
@@ -262,8 +261,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Join the MQTT message with the output of the exec",
         "info": "",
-        "x": 690,
-        "y": 1060,
+        "x": 850,
+        "y": 1100,
         "wires": []
     },
     {
@@ -542,8 +541,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 980,
+        "x": 560,
+        "y": 1020,
         "wires": [
             [
                 "093349a6f7ad70a9"
@@ -569,8 +568,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
-        "y": 1120,
+        "x": 670,
+        "y": 1140,
         "wires": [
             [
                 "69facfd07e9d2cf5"
@@ -597,8 +596,8 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 710,
-        "y": 1120,
+        "x": 870,
+        "y": 1160,
         "wires": [
             [
                 "c2bd8776944f0918"
@@ -616,8 +615,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1100,
-        "y": 1180,
+        "x": 1260,
+        "y": 1220,
         "wires": [
             [
                 "565e507ff7a4fd27"
@@ -644,8 +643,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 860,
-        "y": 1200,
+        "x": 1020,
+        "y": 1240,
         "wires": [
             [
                 "072a428601ccee74"
@@ -674,8 +673,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1360,
-        "y": 1180,
+        "x": 1520,
+        "y": 1220,
         "wires": [
             [
                 "6655c2ea2d120e45",
@@ -694,8 +693,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1090,
-        "y": 1220,
+        "x": 1250,
+        "y": 1260,
         "wires": [
             [
                 "a2e30648c8f1db00"
@@ -1181,7 +1180,8 @@
         "mode": "link",
         "links": [
             "bb7749bc5da42d92",
-            "66cdfa023b6866fd"
+            "66cdfa023b6866fd",
+            "d989f10f3557d264"
         ],
         "x": 1375,
         "y": 120,
@@ -1243,48 +1243,9 @@
         "y": 580,
         "wires": [
             [
-                "bb23b4fe8ef9a3ad"
+                "4e50ad1fd2636b9f"
             ]
         ]
-    },
-    {
-        "id": "e7a51dcd12fcbdce",
-        "type": "http request",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://us-apia.coolkit.cc/v2/device/thing/status",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "x": 1150,
-        "y": 580,
-        "wires": [
-            [
-                "53f55068991e31be"
-            ]
-        ]
-    },
-    {
-        "id": "53f55068991e31be",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1330,
-        "y": 580,
-        "wires": []
     },
     {
         "id": "66cdfa023b6866fd",
@@ -1323,16 +1284,82 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 490,
-        "y": 620,
+        "x": 470,
+        "y": 540,
         "wires": [
             [
-                "bb23b4fe8ef9a3ad"
+                "4e50ad1fd2636b9f"
             ]
         ]
     },
     {
-        "id": "e8c90ecef81a12c1",
+        "id": "4e50ad1fd2636b9f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set msg.payload to \"on\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":\"frontporch\",\"command\":\"on\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 580,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "6bc94594d614ff11",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://us-apia.coolkit.cc/v2/device/thing/status",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 950,
+        "y": 1320,
+        "wires": [
+            [
+                "7f9d5cb6936d4c2a"
+            ]
+        ]
+    },
+    {
+        "id": "7f9d5cb6936d4c2a",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "124eb303892a923a",
         "type": "change",
         "z": "8d56d03bea1b2724",
         "name": "Set HTTP POST headers and body",
@@ -1357,16 +1384,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
-        "y": 580,
+        "x": 720,
+        "y": 1320,
         "wires": [
             [
-                "e7a51dcd12fcbdce"
+                "6bc94594d614ff11"
             ]
         ]
     },
     {
-        "id": "bb23b4fe8ef9a3ad",
+        "id": "1d67e4c0e083ba99",
         "type": "file in",
         "z": "8d56d03bea1b2724",
         "name": "readToken",
@@ -1376,13 +1403,74 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 650,
-        "y": 580,
+        "x": 490,
+        "y": 1320,
         "wires": [
             [
-                "e8c90ecef81a12c1"
+                "124eb303892a923a"
             ]
         ]
+    },
+    {
+        "id": "52d4f49a1934d753",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "checkDeviceName",
+        "property": "payload.device",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "patiolights",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nightlight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "frontporch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 330,
+        "y": 1020,
+        "wires": [
+            [
+                "b41a933079a06993"
+            ],
+            [
+                "6be36868010be007"
+            ],
+            [
+                "1d67e4c0e083ba99"
+            ]
+        ]
+    },
+    {
+        "id": "e4b1d41d557f85da",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "RF Commands",
+        "info": "",
+        "x": 540,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "a0c112f060c2c627",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "HTTP Requests",
+        "info": "",
+        "x": 500,
+        "y": 1260,
+        "wires": []
     },
     {
         "id": "8edadf0ceb978ad1",
