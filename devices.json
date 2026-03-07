@@ -1,6 +1,7 @@
 {
 	"patiolights": {
 		"name": "patio lights",
+		"controlType": "rf",
 		"channel": "1403543416435900457",
 		"validCommands": [
 			"on",
@@ -19,6 +20,7 @@
 	},
 	"nightlight": {
 		"name": "nightlight",
+		"controlType": "rf",
 		"channel": "1442345161056063663",
 		"validCommands": [
 			"on",
@@ -28,6 +30,7 @@
 	},
 	"frontporch": {
 		"name": "front porch light",
+		"controlType": "api",
 		"channel": "1479623106711785646",
 		"validCommands": [
 			"on",
