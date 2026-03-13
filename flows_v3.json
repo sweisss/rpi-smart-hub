@@ -470,7 +470,7 @@
         "id": "15bc4b7f3fb880bd",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "5:45 am Nightlight On",
+        "name": "5:45 am Nightlight On M-F",
         "props": [
             {
                 "p": "payload"
@@ -483,7 +483,7 @@
         "topic": "",
         "payload": "{\"device\": \"nightlight\", \"command\": \"on\"}",
         "payloadType": "str",
-        "x": 200,
+        "x": 220,
         "y": 480,
         "wires": [
             [
@@ -495,14 +495,14 @@
         "id": "24bd2aa7a9e99014",
         "type": "inject",
         "z": "8d56d03bea1b2724",
-        "name": "5:50 am Lights On M-Th",
+        "name": "5:50 am Lights On M-F",
         "props": [
             {
                 "p": "payload"
             }
         ],
         "repeat": "",
-        "crontab": "50 05 * * 1,2,3,4",
+        "crontab": "50 05 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
