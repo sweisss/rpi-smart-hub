@@ -22,8 +22,12 @@ process.env.DISCORD_TOKEN = '<token>'
 To control a smart switch using the [eWeLink API]([url](https://github.com/CoolKit-Technologies/eWeLink-API/blob/main/en/APICenterV2.md)):
 1. Log in to https://web.ewelink.cc/
 2. Get the bearer token from developer tools
-3. Update the `msg.headers` section of the "Set HTTP POST headers and body" node to include the bearer token in the form `Authorization: Bearer <token>`
-4. Update the device id in the `msg.payload` section of the "Set HTTP POST headers and body" node
+    - Right-click anywhere on the web application and select "Inspect"
+    - Go to the Network tab and refresh the page
+    - Some of the files, including _profile_, , _my-scene_, and _query_, will display the Bearer Token in the Request Headers
+    - **NOTE:** The token will refresh after logging in on a different device.
+4. Update the `msg.headers` section of the "Set HTTP POST headers and body" node to include the bearer token in the form `Authorization: Bearer <token>`
+5. Update the device id in the `msg.payload` section of the "Set HTTP POST headers and body" node
 
 Alternatively, add the bearer token and device id to the _settings.js_ and reference them as environment variables much like the Discord token. 
 
