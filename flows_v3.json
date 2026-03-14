@@ -719,8 +719,8 @@
         "insecureHTTPParser": false,
         "authType": "",
         "senderr": false,
-        "x": 770,
-        "y": 1400,
+        "x": 970,
+        "y": 1300,
         "wires": [
             [
                 "02039af8b6e63f63"
@@ -753,8 +753,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 540,
-        "y": 1400,
+        "x": 740,
+        "y": 1300,
         "wires": [
             [
                 "6bc94594d614ff11"
@@ -772,12 +772,11 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 290,
-        "y": 1400,
+        "x": 510,
+        "y": 1300,
         "wires": [
             [
-                "124eb303892a923a",
-                "01df50682428638e"
+                "124eb303892a923a"
             ]
         ]
     },
@@ -831,7 +830,7 @@
         "name": "HTTP Requests",
         "info": "",
         "x": 200,
-        "y": 1360,
+        "y": 1220,
         "wires": []
     },
     {
@@ -843,10 +842,10 @@
             "3d23135311ed7473"
         ],
         "x": 175,
-        "y": 1400,
+        "y": 1260,
         "wires": [
             [
-                "1d67e4c0e083ba99"
+                "df9dca71373f9e59"
             ]
         ]
     },
@@ -858,8 +857,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 930,
-        "y": 1400,
+        "x": 1110,
+        "y": 1300,
         "wires": [
             [
                 "e9e9574e22a2e359"
@@ -1030,7 +1029,7 @@
         "type": "function",
         "z": "8d56d03bea1b2724",
         "name": "checkValidCommand",
-        "func": "const device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommands = devices[device].validCommands\n\nmsg.validCommand = validCommands.includes(msg.payload)\n\nreturn msg;\n",
+        "func": "const device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommands = devices[device].validCommands\n\nmsg.validCommand = validCommands.includes(msg.payload)\n                    || msg.payload.startsWith('update-token ')\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1231,11 +1230,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 700,
+        "x": 640,
         "y": 1140,
         "wires": [
             [
-                "81687c1d1f4436b8"
+                "b4187894f5e69936"
             ]
         ]
     },
@@ -1243,7 +1242,7 @@
         "id": "81687c1d1f4436b8",
         "type": "switch",
         "z": "8d56d03bea1b2724",
-        "name": "If exit code is 0",
+        "name": "If result code is 0",
         "property": "result.error",
         "propertyType": "msg",
         "rules": [
@@ -1259,8 +1258,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 940,
-        "y": 1260,
+        "x": 290,
+        "y": 1440,
         "wires": [
             [
                 "9b886402dad19c1a"
@@ -1276,8 +1275,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Determine a Discord message based on the results",
         "info": "",
-        "x": 1250,
-        "y": 1200,
+        "x": 310,
+        "y": 1380,
         "wires": []
     },
     {
@@ -1291,8 +1290,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1220,
-        "y": 1240,
+        "x": 560,
+        "y": 1420,
         "wires": [
             [
                 "ec8c7efb6524b02e"
@@ -1318,8 +1317,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1480,
-        "y": 1240,
+        "x": 820,
+        "y": 1420,
         "wires": [
             [
                 "75ec9d8e93144528",
@@ -1328,24 +1327,14 @@
         ]
     },
     {
-        "id": "582325e473bd7ff7",
-        "type": "comment",
-        "z": "8d56d03bea1b2724",
-        "name": "Report the task update to Discord ",
-        "info": "",
-        "x": 1750,
-        "y": 1200,
-        "wires": []
-    },
-    {
         "id": "13d77f74cd8b38bd",
         "type": "discordSendMessage",
         "z": "8d56d03bea1b2724",
         "name": "",
         "channel": "",
         "token": "",
-        "x": 1780,
-        "y": 1280,
+        "x": 1120,
+        "y": 1460,
         "wires": []
     },
     {
@@ -1361,8 +1350,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1750,
-        "y": 1240,
+        "x": 1090,
+        "y": 1420,
         "wires": []
     },
     {
@@ -1376,8 +1365,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1210,
-        "y": 1280,
+        "x": 550,
+        "y": 1460,
         "wires": [
             [
                 "52520f178945ca10"
@@ -1445,11 +1434,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1120,
-        "y": 1400,
+        "x": 1260,
+        "y": 1300,
         "wires": [
             [
-                "81687c1d1f4436b8"
+                "bbe86cda36f82017"
             ]
         ]
     },
@@ -1472,8 +1461,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1470,
-        "y": 1280,
+        "x": 810,
+        "y": 1460,
         "wires": [
             [
                 "75ec9d8e93144528",
@@ -1501,22 +1490,6 @@
         ]
     },
     {
-        "id": "01df50682428638e",
-        "type": "debug",
-        "z": "8d56d03bea1b2724",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 490,
-        "y": 1460,
-        "wires": []
-    },
-    {
         "id": "a1db5aa4230e1b84",
         "type": "function",
         "z": "8d56d03bea1b2724",
@@ -1534,6 +1507,155 @@
                 "5af4a5954ebf8a45"
             ]
         ]
+    },
+    {
+        "id": "df9dca71373f9e59",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check Command",
+        "property": "command",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "update-token",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 1260,
+        "wires": [
+            [
+                "08bb31733d3f0426"
+            ],
+            [
+                "1d67e4c0e083ba99"
+            ]
+        ]
+    },
+    {
+        "id": "08bb31733d3f0426",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$split(msg.command, \" \")[1]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 1240,
+        "wires": [
+            [
+                "39fb55c5f41bab83"
+            ]
+        ]
+    },
+    {
+        "id": "39fb55c5f41bab83",
+        "type": "file",
+        "z": "8d56d03bea1b2724",
+        "name": "writeToken",
+        "filename": "/home/raspberry/SmartHub/token.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 690,
+        "y": 1240,
+        "wires": [
+            [
+                "6124ea7bfb750663"
+            ]
+        ]
+    },
+    {
+        "id": "6124ea7bfb750663",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = \"Bearer token updated\"\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1240,
+        "wires": [
+            [
+                "59a338972c4e1d9d"
+            ]
+        ]
+    },
+    {
+        "id": "59a338972c4e1d9d",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1080,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "7310f865dc282558",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Report Results to Discord",
+        "links": [
+            "b4187894f5e69936",
+            "bbe86cda36f82017"
+        ],
+        "x": 165,
+        "y": 1440,
+        "wires": [
+            [
+                "81687c1d1f4436b8"
+            ]
+        ]
+    },
+    {
+        "id": "b4187894f5e69936",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "RF Results",
+        "mode": "link",
+        "links": [
+            "7310f865dc282558"
+        ],
+        "x": 765,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "bbe86cda36f82017",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "API Results",
+        "mode": "link",
+        "links": [
+            "7310f865dc282558"
+        ],
+        "x": 1375,
+        "y": 1300,
+        "wires": []
     },
     {
         "id": "8edadf0ceb978ad1",
