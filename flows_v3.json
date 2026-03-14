@@ -12,7 +12,7 @@
         "type": "mqtt in",
         "z": "8d56d03bea1b2724",
         "name": "RPi Broker RF",
-        "topic": "rf",
+        "topic": "devices/#",
         "qos": "2",
         "datatype": "json",
         "broker": "8edadf0ceb978ad1",
@@ -58,13 +58,17 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
             }
         ],
         "repeat": "",
         "crontab": "00 02 * * *",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "",
+        "topic": "devices/rf",
         "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
         "payloadType": "json",
         "x": 180,
@@ -100,7 +104,7 @@
         "type": "mqtt out",
         "z": "8d56d03bea1b2724",
         "name": "RPi Broker RF",
-        "topic": "rf",
+        "topic": "",
         "qos": "2",
         "retain": "true",
         "respTopic": "",
@@ -121,6 +125,11 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "devices",
+                "v": "devices/rf",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -289,7 +298,7 @@
         "id": "d6f387d14c300b4f",
         "type": "change",
         "z": "8d56d03bea1b2724",
-        "name": "Set msg.payload to \"on\"",
+        "name": "Set msg.payload and msg.topic",
         "rules": [
             {
                 "t": "set",
@@ -297,6 +306,13 @@
                 "pt": "msg",
                 "to": "{\"device\":\"patiolights\",\"command\":\"on\"}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices/rf",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -304,7 +320,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 630,
+        "x": 650,
         "y": 260,
         "wires": [
             [
@@ -474,15 +490,19 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
             }
         ],
         "repeat": "",
         "crontab": "45 05 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "",
+        "topic": "devices/rf",
         "payload": "{\"device\": \"nightlight\", \"command\": \"on\"}",
-        "payloadType": "str",
+        "payloadType": "json",
         "x": 220,
         "y": 480,
         "wires": [
@@ -499,15 +519,19 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
             }
         ],
         "repeat": "",
         "crontab": "50 05 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "",
+        "topic": "devices/rf",
         "payload": "{\"device\": \"patiolights\", \"command\": \"on\"}",
-        "payloadType": "str",
+        "payloadType": "json",
         "x": 210,
         "y": 340,
         "wires": [
@@ -650,7 +674,7 @@
         "id": "4e50ad1fd2636b9f",
         "type": "change",
         "z": "8d56d03bea1b2724",
-        "name": "Set msg.payload to \"on\"",
+        "name": "Set msg.payload and msg.topic",
         "rules": [
             {
                 "t": "set",
@@ -658,6 +682,13 @@
                 "pt": "msg",
                 "to": "{\"device\":\"frontporch\",\"command\":\"on\"}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices/wifi",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -665,7 +696,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
+        "x": 710,
         "y": 580,
         "wires": [
             [
@@ -745,7 +776,8 @@
         "y": 1400,
         "wires": [
             [
-                "124eb303892a923a"
+                "124eb303892a923a",
+                "01df50682428638e"
             ]
         ]
     },
@@ -1047,7 +1079,7 @@
         "type": "mqtt out",
         "z": "8d56d03bea1b2724",
         "name": "RPi Broker RF",
-        "topic": "rf",
+        "topic": "",
         "qos": "2",
         "retain": "true",
         "respTopic": "",
@@ -1056,7 +1088,7 @@
         "correl": "",
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
-        "x": 1460,
+        "x": 1600,
         "y": 800,
         "wires": []
     },
@@ -1072,6 +1104,13 @@
                 "pt": "msg",
                 "to": "{\"device\":msg.channel.name,\"command\": msg.payload}",
                 "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -1083,7 +1122,7 @@
         "y": 800,
         "wires": [
             [
-                "5af4a5954ebf8a45"
+                "a1db5aa4230e1b84"
             ]
         ]
     },
@@ -1458,6 +1497,41 @@
         "wires": [
             [
                 "52d4f49a1934d753"
+            ]
+        ]
+    },
+    {
+        "id": "01df50682428638e",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "a1db5aa4230e1b84",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setTopic",
+        "func": "const devices = flow.get('devices')\nconst subTopic = devices[msg.payload.device].controlType\n\nmsg.topic = `devices/${subTopic}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1440,
+        "y": 800,
+        "wires": [
+            [
+                "5af4a5954ebf8a45"
             ]
         ]
     },
