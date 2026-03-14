@@ -34,8 +34,9 @@
 		"channel": "1479623106711785646",
 		"validCommands": [
 			"on",
-			"off"
+			"off",
+			"update-token"
 		],
-		"validCommandsDesc" : "\nValid commands:\n- on\n- off"
+		"validCommandsDesc" : "\nValid commands:\n- on\n- off\n- update-token <token>"
 	}
 }
