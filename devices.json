@@ -30,7 +30,7 @@
 	},
 	"frontporch": {
 		"name": "front porch light",
-		"controlType": "api",
+		"controlType": "wifi",
 		"channel": "1479623106711785646",
 		"validCommands": [
 			"on",
