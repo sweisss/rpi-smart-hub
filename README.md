@@ -24,12 +24,10 @@ To control a smart switch using the [eWeLink API]([url](https://github.com/CoolK
 2. Get the bearer token from developer tools
     - Right-click anywhere on the web application and select "Inspect"
     - Go to the Network tab and refresh the page
-    - Some of the files, including _profile_, , _my-scene_, and _query_, will display the Bearer Token in the Request Headers
+    - Some of the files, including _profile_, _my-scene_, and _query_, will display the Bearer Token in the Request Headers
     - **NOTE:** The token will refresh after logging in on a different device.
-4. Update the `msg.headers` section of the "Set HTTP POST headers and body" node to include the bearer token in the form `Authorization: Bearer <token>`
-5. Update the device id in the `msg.payload` section of the "Set HTTP POST headers and body" node
-
-Alternatively, add the bearer token and device id to the _settings.js_ and reference them as environment variables much like the Discord token. 
+4. Add the device id to _settings.js_ with the name `PORCHSWITCH_ID`, similar to the `DISCORD_TOKEN`, and reference it from an environment variable in the "Set HTTP POST headers and body" node.
+5. Add the bearer token to a file named _token.txt_ adjacent to the _rf_transmit.py_ script. Update the file paths in the _readToken_ and _writeToken_ nodes if necessary. 
 
 ### Python Script
 Be sure to update the exec node with the correct location of the python script on your system. 
