@@ -11,7 +11,7 @@
         "id": "091e3e1b01889a61",
         "type": "mqtt in",
         "z": "8d56d03bea1b2724",
-        "name": "RPi Broker RF",
+        "name": "RPi Broker",
         "topic": "devices/#",
         "qos": "2",
         "datatype": "json",
@@ -20,7 +20,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
+        "x": 120,
         "y": 1000,
         "wires": [
             [
@@ -103,7 +103,7 @@
         "id": "b9254c801a6b7f22",
         "type": "mqtt out",
         "z": "8d56d03bea1b2724",
-        "name": "RPi Broker RF",
+        "name": "RPi Broker",
         "topic": "",
         "qos": "2",
         "retain": "true",
@@ -113,7 +113,7 @@
         "correl": "",
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
-        "x": 980,
+        "x": 970,
         "y": 320,
         "wires": []
     },
@@ -1078,7 +1078,7 @@
         "id": "5af4a5954ebf8a45",
         "type": "mqtt out",
         "z": "8d56d03bea1b2724",
-        "name": "RPi Broker RF",
+        "name": "RPi Broker",
         "topic": "",
         "qos": "2",
         "retain": "true",
@@ -1088,7 +1088,7 @@
         "correl": "",
         "expiry": "",
         "broker": "8edadf0ceb978ad1",
-        "x": 1600,
+        "x": 1590,
         "y": 800,
         "wires": []
     },
