@@ -127,8 +127,7 @@
                 "p": "payload"
             },
             {
-                "p": "devices",
-                "v": "devices/rf",
+                "p": "topic",
                 "vt": "str"
             }
         ],
@@ -136,7 +135,7 @@
         "crontab": "00 07 * * *",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "",
+        "topic": "devices/rf",
         "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
         "payloadType": "json",
         "x": 180,
