@@ -5,6 +5,10 @@ This project uses a Raspberry Pi 3 as a smart hub for dumb lights.
 A more detailed writeup of the project can be found at: https://sweisss.github.io/projects/smarthubfordumblights.html
 
 ## Setup
+The only files from this repository that need to actually be cloned to the Raspberry Pi are _devices.json_ and _rf_transmit.py_.
+The data from _flows_vx.json_ can be imported to Node-RED via copy and paste.
+For more information on how to do this, see the official Node-RED [documentation](https://nodered.org/docs/user-guide/editor/workspace/import-export). 
+
 ### Discord Integration
 After importing the flow to Node-RED, be sure to install [node-red-contrib-discord 5.0.0](https://flows.nodered.org/node/node-red-contrib-discord) from the Manage palatte. 
 
@@ -17,6 +21,8 @@ The line should look like the following:
 ```
 process.env.DISCORD_TOKEN = '<token>'
 ```
+
+After setting up the Discord server, be sure to update the channel ids in _devices.json_. 
 
 ### eWeLink Integration
 To control a smart switch using the [eWeLink API]([url](https://github.com/CoolKit-Technologies/eWeLink-API/blob/main/en/APICenterV2.md)):
