@@ -4,7 +4,7 @@ This project uses a Raspberry Pi 3 as a smart hub for dumb lights.
 
 A more detailed writeup of the project can be found at: https://sweisss.github.io/projects/smarthubfordumblights.html
 
-[![Full Flow](FullFlow_4-26-26.png)](https://github.com/sweisss/rpi-smart-hub/blob/main/FullFlow_4-26-26.png))
+[![Full Flow](FullFlow_4-26-26.png)](https://github.com/sweisss/rpi-smart-hub/blob/main/FullFlow_4-26-26.png)
 
 ## Setup
 The only files from this repository that need to actually be cloned to the Raspberry Pi are _devices.json_ and _rf_transmit.py_.
