@@ -770,7 +770,8 @@
         "z": "8d56d03bea1b2724",
         "name": "Send API Request",
         "links": [
-            "3d23135311ed7473"
+            "3d23135311ed7473",
+            "237543ab1deb9bff"
         ],
         "x": 175,
         "y": 1280,
@@ -1191,7 +1192,7 @@
         "repair": false,
         "outputs": 2,
         "x": 290,
-        "y": 1460,
+        "y": 1660,
         "wires": [
             [
                 "9b886402dad19c1a"
@@ -1208,7 +1209,7 @@
         "name": "Determine a Discord message based on the results",
         "info": "",
         "x": 310,
-        "y": 1400,
+        "y": 1600,
         "wires": []
     },
     {
@@ -1223,7 +1224,7 @@
         "finalize": "",
         "libs": [],
         "x": 560,
-        "y": 1440,
+        "y": 1640,
         "wires": [
             [
                 "ec8c7efb6524b02e"
@@ -1250,7 +1251,7 @@
         "to": "",
         "reg": false,
         "x": 820,
-        "y": 1440,
+        "y": 1640,
         "wires": [
             [
                 "75ec9d8e93144528",
@@ -1266,7 +1267,7 @@
         "channel": "",
         "token": "",
         "x": 1120,
-        "y": 1480,
+        "y": 1680,
         "wires": []
     },
     {
@@ -1283,7 +1284,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1090,
-        "y": 1440,
+        "y": 1640,
         "wires": []
     },
     {
@@ -1298,7 +1299,7 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 1480,
+        "y": 1680,
         "wires": [
             [
                 "52520f178945ca10"
@@ -1370,7 +1371,7 @@
         "y": 1320,
         "wires": [
             [
-                "bbe86cda36f82017"
+                "3c101e9386889c38"
             ]
         ]
     },
@@ -1394,7 +1395,7 @@
         "to": "",
         "reg": false,
         "x": 810,
-        "y": 1480,
+        "y": 1680,
         "wires": [
             [
                 "75ec9d8e93144528",
@@ -1556,7 +1557,7 @@
             "bbe86cda36f82017"
         ],
         "x": 165,
-        "y": 1460,
+        "y": 1660,
         "wires": [
             [
                 "81687c1d1f4436b8"
@@ -1585,8 +1586,8 @@
         "links": [
             "7310f865dc282558"
         ],
-        "x": 1375,
-        "y": 1320,
+        "x": 515,
+        "y": 1480,
         "wires": []
     },
     {
@@ -1916,6 +1917,300 @@
         ],
         "x": 1505,
         "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3c101e9386889c38",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check for invalid token",
+        "property": "result.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "401",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 390,
+        "y": 1420,
+        "wires": [
+            [
+                "688029504743e8d2",
+                "77413483b2acb9a1"
+            ],
+            [
+                "bbe86cda36f82017"
+            ]
+        ]
+    },
+    {
+        "id": "688029504743e8d2",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set headers and body",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"Content-Type\":\"application/json\",\"X-Ck-Nonce\":\"eZlmGgYu\",\"X-Ck-Appid\":\"K0OCDSvIaBWdEaU4zxlKEwk26kmshoXK\",\"X-Ck-Encryption\":true,\"Authorization\":\"Sign 0hijl1AeYRbfhUgntkONA+/cZ7NAUOOKSMsV6KD/O/8=\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"encryptedData\":\"J8kBIULBj59L0xrCXZ5a386IWacYbCmtpwBcADbY3r7oKjikbpUF07uXJlBhV0qxb+5GyadY46YBcOZsmBI54FGrBd2CNKxahgGvbBKzlO0dbt9Su6y8WI4CMMsPucqQ\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 1460,
+        "wires": [
+            [
+                "4ea6a870c6249ebd"
+            ]
+        ]
+    },
+    {
+        "id": "4ea6a870c6249ebd",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "POST /v2/user/login",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://us-apia.coolkit.cc/v2/user/login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 920,
+        "y": 1460,
+        "wires": [
+            [
+                "6c09b0cc78380c33"
+            ]
+        ]
+    },
+    {
+        "id": "6c09b0cc78380c33",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1090,
+        "y": 1460,
+        "wires": [
+            [
+                "e103f9d7f11bafd2"
+            ]
+        ]
+    },
+    {
+        "id": "feea357cc35271ab",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.at",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 1520,
+        "wires": [
+            [
+                "0d49f1a55037c87d"
+            ]
+        ]
+    },
+    {
+        "id": "0d49f1a55037c87d",
+        "type": "file",
+        "z": "8d56d03bea1b2724",
+        "name": "writeToken",
+        "filename": "/home/raspberry/SmartHub/token.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1090,
+        "y": 1520,
+        "wires": [
+            [
+                "0960c3d9ce187347"
+            ]
+        ]
+    },
+    {
+        "id": "237543ab1deb9bff",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "Retry HTTP",
+        "mode": "link",
+        "links": [
+            "c67a76bceef3b90e"
+        ],
+        "x": 1425,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "77413483b2acb9a1",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = \"Bearer token expired. Attempting to renew it...\"\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 1400,
+        "wires": [
+            [
+                "792824c95ccccfff"
+            ]
+        ]
+    },
+    {
+        "id": "792824c95ccccfff",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 900,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "e103f9d7f11bafd2",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check response code",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 680,
+        "y": 1520,
+        "wires": [
+            [
+                "feea357cc35271ab"
+            ],
+            [
+                "3e3572516e22e024"
+            ]
+        ]
+    },
+    {
+        "id": "3e3572516e22e024",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "HTTP Error",
+        "mode": "link",
+        "links": [
+            "7b0f6005d1cdc517"
+        ],
+        "x": 815,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "7b0f6005d1cdc517",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Error Message",
+        "links": [
+            "3e3572516e22e024"
+        ],
+        "x": 365,
+        "y": 1700,
+        "wires": [
+            [
+                "e2edbb35a2dfe130"
+            ]
+        ]
+    },
+    {
+        "id": "0960c3d9ce187347",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = `Bearer token updated. Reattempting command \"${msg.command}\".`\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 1520,
+        "wires": [
+            [
+                "754cfba97b1c5bf4",
+                "237543ab1deb9bff"
+            ]
+        ]
+    },
+    {
+        "id": "754cfba97b1c5bf4",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1520,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "9b5e5e2f330195b3",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Handle expired token",
+        "info": "",
+        "x": 320,
+        "y": 1360,
         "wires": []
     },
     {
