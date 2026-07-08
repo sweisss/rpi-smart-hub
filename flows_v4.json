@@ -1,0 +1,2271 @@
+[
+    {
+        "id": "8d56d03bea1b2724",
+        "type": "tab",
+        "label": "SmartHubFlow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "091e3e1b01889a61",
+        "type": "mqtt in",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker",
+        "topic": "devices/#",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "8edadf0ceb978ad1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 1020,
+        "wires": [
+            [
+                "b41a933079a06993"
+            ]
+        ]
+    },
+    {
+        "id": "093349a6f7ad70a9",
+        "type": "exec",
+        "z": "8d56d03bea1b2724",
+        "command": "python ~/SmartHub/rf_transmit.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 360,
+        "y": 1160,
+        "wires": [
+            [],
+            [],
+            [
+                "146c7bbc7f027a84"
+            ]
+        ]
+    },
+    {
+        "id": "0a8b46906abfc42d",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "2 am Lights Off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 02 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "devices/rf",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "70d7f39b7a276e66",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Daily Schedule",
+        "info": "",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "b662ec359327780f",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Actions Directed From MQTT Broker",
+        "info": "",
+        "x": 180,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "b9254c801a6b7f22",
+        "type": "mqtt out",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker",
+        "topic": "",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8edadf0ceb978ad1",
+        "x": 970,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8fd42c7d04920c33",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "7 am Lights Off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "devices/rf",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"off\"}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "5d54103f57cdff78",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Dynamic Lights-On Time (based on sunset time)",
+        "info": "",
+        "x": 240,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "ca1993b75848d0a8",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "1 am Daily Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 01 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "17faa49b29f17dc7"
+            ]
+        ]
+    },
+    {
+        "id": "242e599e4e290ce7",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "calculateDelayToSunset",
+        "func": "// ----------------------------------------------------------\n// INPUT : msg.payload = \"6:03 pm\"   (or \"18:03\")\n// OUTPUT: msg.delay   = milliseconds until the next sunset\n// ----------------------------------------------------------\n\n/**\n * Convert a sunset string (\"h:mm am|pm\") into a Date object for today.\n * If the parsed time is already in the past, we roll forward to tomorrow.\n * Via Lumo AI\n */\nfunction getSunsetTimestamp(sunsetStr) {\n    // Normalise the string: trim, lower‑case, collapse extra spaces\n    const s = sunsetStr.trim().toLowerCase();\n\n    // Split into time part and optional meridiem (am/pm)\n    const parts = s.split(/\\s+/);               // [\"6:03\", \"pm\"]  or [\"18:03\"]\n    const timePart = parts[0];                  // \"6:03\" or \"18:03\"\n    const meridiem = parts[1] || null;          // \"pm\" or undefined\n\n    // Separate hour and minute\n    const [hourStr, minuteStr] = timePart.split(':');\n    let hour   = parseInt(hourStr, 10);\n    const minute = parseInt(minuteStr, 10);\n\n    // If we have an am/pm marker, convert to 24‑hour clock\n    if (meridiem) {\n        if (meridiem === 'pm' && hour < 12) hour += 12;\n        if (meridiem === 'am' && hour === 12) hour = 0; // 12 am → 0 h\n    }\n\n    // Build a Date for *today* in the local time zone\n    const now = new Date();\n    const sunsetToday = new Date(\n        now.getFullYear(),\n        now.getMonth(),      // month index 0‑11\n        now.getDate(),\n        hour,\n        minute,\n        0,                   // seconds\n        0                    // ms\n    );\n\n    // If that moment is already past, move it to tomorrow\n    if (sunsetToday.getTime() <= now.getTime()) {\n        sunsetToday.setDate(sunsetToday.getDate() + 1);\n    }\n\n    return sunsetToday.getTime(); // ms since epoch\n}\n\n// ------------------------------------------------------------------\n// Main body of the Function node\n// ------------------------------------------------------------------\nconst sunsetString    = msg.payload;               // e.g. \"6:03 pm\"\nconst nowMs           = Date.now();                // current timestamp\nconst sunsetMs        = getSunsetTimestamp(sunsetString);\nconst minBeforeSunset = 10\nconst msBeforeSunset  = minBeforeSunset * 60 * 1000\n\n// Compute the delay (always non‑negative)\nconst delayMs = Math.max(0, sunsetMs - nowMs - msBeforeSunset);\n\n// Put the result where the downstream Delay node expects it.\n// By default the Delay node looks at msg.delay, but you can change the property in its config.\nmsg.delay = delayMs;\n\n// Optional: keep some diagnostics handy for debugging\nmsg.sunsetTimestamp = sunsetMs;\nmsg.currentTimestamp = nowMs;\nmsg.debug = {\n    sunsetString,\n    delayMs,\n    // Human‑readable versions\n    sunsetISO: new Date(sunsetMs).toISOString(),\n    nowISO   : new Date(nowMs).toISOString()\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 280,
+        "wires": [
+            [
+                "88839e9f3255771c"
+            ]
+        ]
+    },
+    {
+        "id": "88839e9f3255771c",
+        "type": "delay",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "d6f387d14c300b4f"
+            ]
+        ]
+    },
+    {
+        "id": "d6f387d14c300b4f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set msg.payload and msg.topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":\"patiolights\",\"command\":\"on\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices/rf",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "ccf8dcca32c8b45e",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "Manual Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "17faa49b29f17dc7"
+            ]
+        ]
+    },
+    {
+        "id": "d8034cce354905bb",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check for 200 status code",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 940,
+        "y": 120,
+        "wires": [
+            [
+                "71c0d3dfece0ac37"
+            ],
+            [
+                "64bfafdf629a3015"
+            ]
+        ]
+    },
+    {
+        "id": "e479e48241f2b6a8",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set on-time of 6:30 pm",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "6:30 pm",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1450,
+        "y": 140,
+        "wires": [
+            [
+                "8bbe17685cec3d53"
+            ]
+        ]
+    },
+    {
+        "id": "b41a933079a06993",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Extract Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device",
+                "pt": "msg",
+                "to": "payload.device",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "command",
+                "pt": "msg",
+                "to": "payload.command",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$join([msg.payload.device, \" \", msg.payload.command])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 1040,
+        "wires": [
+            [
+                "df67de3ee2754240"
+            ]
+        ]
+    },
+    {
+        "id": "e3787288f9da2abb",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Push Messages From Discord to the MQTT broker",
+        "info": "",
+        "x": 230,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "aeaed21119735a76",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Nightlight",
+        "info": "",
+        "x": 120,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "dbbf4b72ce10aef4",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Patio Lights",
+        "info": "",
+        "x": 130,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "15bc4b7f3fb880bd",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "5:45 am Nightlight On M-F",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "45 05 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "devices/rf",
+        "payload": "{\"device\": \"nightlight\", \"command\": \"on\"}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 500,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "24bd2aa7a9e99014",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "5:50 am Lights On M-F",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "50 05 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "devices/rf",
+        "payload": "{\"device\": \"patiolights\", \"command\": \"on\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "3e24209662561fd2",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Front Porch",
+        "info": "",
+        "x": 130,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8bbe17685cec3d53",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "Forecasted Sunset Time",
+        "mode": "link",
+        "links": [
+            "bb7749bc5da42d92",
+            "66cdfa023b6866fd",
+            "d989f10f3557d264"
+        ],
+        "x": 1635,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "bb7749bc5da42d92",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Front Porch Sunset Time",
+        "links": [
+            "8bbe17685cec3d53"
+        ],
+        "x": 115,
+        "y": 600,
+        "wires": [
+            [
+                "c9df06a86cfa1907"
+            ]
+        ]
+    },
+    {
+        "id": "c9df06a86cfa1907",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "calculateDelayToSunset",
+        "func": "// ----------------------------------------------------------\n// INPUT : msg.payload = \"6:03 pm\"   (or \"18:03\")\n// OUTPUT: msg.delay   = milliseconds until the next sunset\n// ----------------------------------------------------------\n\n/**\n * Convert a sunset string (\"h:mm am|pm\") into a Date object for today.\n * If the parsed time is already in the past, we roll forward to tomorrow.\n * Via Lumo AI\n */\nfunction getSunsetTimestamp(sunsetStr) {\n    // Normalise the string: trim, lower‑case, collapse extra spaces\n    const s = sunsetStr.trim().toLowerCase();\n\n    // Split into time part and optional meridiem (am/pm)\n    const parts = s.split(/\\s+/);               // [\"6:03\", \"pm\"]  or [\"18:03\"]\n    const timePart = parts[0];                  // \"6:03\" or \"18:03\"\n    const meridiem = parts[1] || null;          // \"pm\" or undefined\n\n    // Separate hour and minute\n    const [hourStr, minuteStr] = timePart.split(':');\n    let hour   = parseInt(hourStr, 10);\n    const minute = parseInt(minuteStr, 10);\n\n    // If we have an am/pm marker, convert to 24‑hour clock\n    if (meridiem) {\n        if (meridiem === 'pm' && hour < 12) hour += 12;\n        if (meridiem === 'am' && hour === 12) hour = 0; // 12 am → 0 h\n    }\n\n    // Build a Date for *today* in the local time zone\n    const now = new Date();\n    const sunsetToday = new Date(\n        now.getFullYear(),\n        now.getMonth(),      // month index 0‑11\n        now.getDate(),\n        hour,\n        minute,\n        0,                   // seconds\n        0                    // ms\n    );\n\n    // If that moment is already past, move it to tomorrow\n    if (sunsetToday.getTime() <= now.getTime()) {\n        sunsetToday.setDate(sunsetToday.getDate() + 1);\n    }\n\n    return sunsetToday.getTime(); // ms since epoch\n}\n\n// ------------------------------------------------------------------\n// Main body of the Function node\n// ------------------------------------------------------------------\nconst sunsetString    = msg.payload;               // e.g. \"6:03 pm\"\nconst nowMs           = Date.now();                // current timestamp\nconst sunsetMs        = getSunsetTimestamp(sunsetString);\nconst minBeforeSunset = 15\nconst msBeforeSunset  = minBeforeSunset * 60 * 1000\n\n// Compute the delay (always non‑negative)\nconst delayMs = Math.max(0, sunsetMs - nowMs - msBeforeSunset);\n\n// Put the result where the downstream Delay node expects it.\n// By default the Delay node looks at msg.delay, but you can change the property in its config.\nmsg.delay = delayMs;\n\n// Optional: keep some diagnostics handy for debugging\nmsg.sunsetTimestamp = sunsetMs;\nmsg.currentTimestamp = nowMs;\nmsg.debug = {\n    sunsetString,\n    delayMs,\n    // Human‑readable versions\n    sunsetISO: new Date(sunsetMs).toISOString(),\n    nowISO   : new Date(nowMs).toISOString()\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 600,
+        "wires": [
+            [
+                "6e2be73d9802d0f7"
+            ]
+        ]
+    },
+    {
+        "id": "6e2be73d9802d0f7",
+        "type": "delay",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "4e50ad1fd2636b9f"
+            ]
+        ]
+    },
+    {
+        "id": "66cdfa023b6866fd",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Patio Lights Sunset Time",
+        "links": [
+            "8bbe17685cec3d53"
+        ],
+        "x": 95,
+        "y": 280,
+        "wires": [
+            [
+                "242e599e4e290ce7"
+            ]
+        ]
+    },
+    {
+        "id": "2026380d56929c6a",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "Manual Inject",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 560,
+        "wires": [
+            [
+                "4e50ad1fd2636b9f"
+            ]
+        ]
+    },
+    {
+        "id": "4e50ad1fd2636b9f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set msg.payload and msg.topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":\"frontporch\",\"command\":\"on\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices/wifi",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 600,
+        "wires": [
+            [
+                "b9254c801a6b7f22"
+            ]
+        ]
+    },
+    {
+        "id": "6bc94594d614ff11",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://us-apia.coolkit.cc/v2/device/thing/status",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 970,
+        "y": 1320,
+        "wires": [
+            [
+                "02039af8b6e63f63"
+            ]
+        ]
+    },
+    {
+        "id": "124eb303892a923a",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set HTTP POST headers and body",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t    \"Content-Type\": \"application/json\",\t    \"User-Agent\": \"Node-RED\",\t    \"Authorization\": \"Bearer \" & $trim(msg.payload)\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"type\":1,\t    \"id\": $env('PORCHSWITCH_ID'),\t    \"params\":{\t        \"switch\":msg.command\t    }\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 1320,
+        "wires": [
+            [
+                "6bc94594d614ff11"
+            ]
+        ]
+    },
+    {
+        "id": "1d67e4c0e083ba99",
+        "type": "file in",
+        "z": "8d56d03bea1b2724",
+        "name": "readToken",
+        "filename": "/home/raspberry/SmartHub/token.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 510,
+        "y": 1320,
+        "wires": [
+            [
+                "124eb303892a923a"
+            ]
+        ]
+    },
+    {
+        "id": "52d4f49a1934d753",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Filter on Control Type",
+        "property": "controlType",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "rf",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "wifi",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 760,
+        "y": 1040,
+        "wires": [
+            [
+                "be1f68b86c7cd19f"
+            ],
+            [
+                "3d23135311ed7473"
+            ]
+        ]
+    },
+    {
+        "id": "e4b1d41d557f85da",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "RF Commands",
+        "info": "",
+        "x": 200,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "a0c112f060c2c627",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "HTTP Requests",
+        "info": "",
+        "x": 200,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "c67a76bceef3b90e",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Send API Request",
+        "links": [
+            "3d23135311ed7473",
+            "237543ab1deb9bff"
+        ],
+        "x": 175,
+        "y": 1280,
+        "wires": [
+            [
+                "df9dca71373f9e59"
+            ]
+        ]
+    },
+    {
+        "id": "02039af8b6e63f63",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1110,
+        "y": 1320,
+        "wires": [
+            [
+                "e9e9574e22a2e359"
+            ]
+        ]
+    },
+    {
+        "id": "987adaddcfb0bdd0",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "Startup Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 740,
+        "wires": [
+            [
+                "6c0350a609a2919a"
+            ]
+        ]
+    },
+    {
+        "id": "6c0350a609a2919a",
+        "type": "file in",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "filename": "/home/raspberry/SmartHub/devices.json",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 440,
+        "y": 740,
+        "wires": [
+            [
+                "744e4c2634f2661b"
+            ]
+        ]
+    },
+    {
+        "id": "744e4c2634f2661b",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 690,
+        "y": 740,
+        "wires": [
+            [
+                "edc77a4e4a433e2d"
+            ]
+        ]
+    },
+    {
+        "id": "edc77a4e4a433e2d",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "devices",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "112d417202aa8366",
+        "type": "discordMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "token": "",
+        "x": 140,
+        "y": 880,
+        "wires": [
+            [
+                "04ea6bcd2e291086",
+                "791b22eb59e37506"
+            ]
+        ]
+    },
+    {
+        "id": "9493ebacdcd1a1a8",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Filter Channels",
+        "property": "channel.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "patiolights",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nightlight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "frontporch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 620,
+        "y": 880,
+        "wires": [
+            [
+                "515d4f9a8eb8134d"
+            ],
+            [
+                "515d4f9a8eb8134d"
+            ],
+            [
+                "515d4f9a8eb8134d"
+            ]
+        ]
+    },
+    {
+        "id": "04ea6bcd2e291086",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "msg.payload.toLowerCase",
+        "func": "msg.payload = msg.payload.toLowerCase()\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 880,
+        "wires": [
+            [
+                "9493ebacdcd1a1a8"
+            ]
+        ]
+    },
+    {
+        "id": "515d4f9a8eb8134d",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "checkValidCommand",
+        "func": "const device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommands = devices[device].validCommands\n\nmsg.validCommand = validCommands.includes(msg.payload)\n                    || msg.payload.startsWith('update-token ')\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 880,
+        "wires": [
+            [
+                "dd914ee65484f7bd"
+            ]
+        ]
+    },
+    {
+        "id": "dd914ee65484f7bd",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "validCommand",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1050,
+        "y": 880,
+        "wires": [
+            [
+                "6ec79d0bcfe268c9",
+                "7b5ae0bd6b50edf0"
+            ],
+            [
+                "a622f706234dc728"
+            ]
+        ]
+    },
+    {
+        "id": "5af4a5954ebf8a45",
+        "type": "mqtt out",
+        "z": "8d56d03bea1b2724",
+        "name": "RPi Broker",
+        "topic": "",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8edadf0ceb978ad1",
+        "x": 1590,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "6ec79d0bcfe268c9",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set MQTT Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"device\":msg.channel.name,\"command\": msg.payload}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "devices",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 820,
+        "wires": [
+            [
+                "a1db5aa4230e1b84"
+            ]
+        ]
+    },
+    {
+        "id": "7b5ae0bd6b50edf0",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatValidCommandMessage",
+        "func": "let command = msg.payload\nlet device = msg.channel.name\nlet devices = flow.get('devices')\n\nlet deviceName = devices[device].name\n\n\nmsg.payload = `Updating the ${deviceName} to ${command}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 880,
+        "wires": [
+            [
+                "042a44bf31dd8f5f"
+            ]
+        ]
+    },
+    {
+        "id": "a622f706234dc728",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "formatInvalidCommandMessage",
+        "func": "const givenCommand = msg.payload\nconst device = msg.channel.name\nconst devices = flow.get('devices')\nconst validCommandsDesc = devices[device].validCommandsDesc\n\nmsg.payload = `Invalid command: ${givenCommand}\n${validCommandsDesc}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 920,
+        "wires": [
+            [
+                "042a44bf31dd8f5f"
+            ]
+        ]
+    },
+    {
+        "id": "042a44bf31dd8f5f",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Reply Channel",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "channel.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1550,
+        "y": 900,
+        "wires": [
+            [
+                "f3c68b63dbb976d5"
+            ]
+        ]
+    },
+    {
+        "id": "f3c68b63dbb976d5",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1780,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "2383d74cd7958c91",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Set Device Info in a Flow Variable",
+        "info": "",
+        "x": 170,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "146c7bbc7f027a84",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "result",
+                "pt": "msg",
+                "to": "{\"error\": msg.payload.code, \"msg\": \"RF signal transmission failed\"}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 1160,
+        "wires": [
+            [
+                "b4187894f5e69936"
+            ]
+        ]
+    },
+    {
+        "id": "81687c1d1f4436b8",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "If result code is 0",
+        "property": "result.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 290,
+        "y": 1660,
+        "wires": [
+            [
+                "9b886402dad19c1a"
+            ],
+            [
+                "e2edbb35a2dfe130"
+            ]
+        ]
+    },
+    {
+        "id": "2ad1cd0e10de2afe",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Determine a Discord message based on the results",
+        "info": "",
+        "x": 310,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "9b886402dad19c1a",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setSuccessMessageDetails",
+        "func": "let device = msg.device\nlet command = msg.command\nlet msgTxt = \"\"\nlet devices = flow.get('devices')\nlet deviceName = devices[device].name\nlet channel = devices[device].channel\nlet lastChar = device.slice(-1)\nlet indicative = lastChar === 's' ? 'are' : 'is'\n\nmsgTxt = `The ${deviceName} ${indicative} now ${command}`\n\nmsg.payload.txt = msgTxt\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1640,
+        "wires": [
+            [
+                "ec8c7efb6524b02e"
+            ]
+        ]
+    },
+    {
+        "id": "ec8c7efb6524b02e",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Success Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.txt",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 1640,
+        "wires": [
+            [
+                "75ec9d8e93144528",
+                "13d77f74cd8b38bd"
+            ]
+        ]
+    },
+    {
+        "id": "13d77f74cd8b38bd",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1120,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "75ec9d8e93144528",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "e2edbb35a2dfe130",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setFailMessageChannel",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1680,
+        "wires": [
+            [
+                "52520f178945ca10"
+            ]
+        ]
+    },
+    {
+        "id": "3d23135311ed7473",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT API",
+        "mode": "link",
+        "links": [
+            "c67a76bceef3b90e"
+        ],
+        "x": 905,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "be1f68b86c7cd19f",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "MQTT RF",
+        "mode": "link",
+        "links": [
+            "a64558d411eeff92"
+        ],
+        "x": 905,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "a64558d411eeff92",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Transmit RF Signal",
+        "links": [
+            "be1f68b86c7cd19f"
+        ],
+        "x": 175,
+        "y": 1160,
+        "wires": [
+            [
+                "093349a6f7ad70a9"
+            ]
+        ]
+    },
+    {
+        "id": "e9e9574e22a2e359",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "result",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 1320,
+        "wires": [
+            [
+                "3c101e9386889c38"
+            ]
+        ]
+    },
+    {
+        "id": "52520f178945ca10",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Failure Discord message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "\"Error: \" & msg.result.error & ' - ' & msg.result.msg",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 1680,
+        "wires": [
+            [
+                "75ec9d8e93144528",
+                "13d77f74cd8b38bd"
+            ]
+        ]
+    },
+    {
+        "id": "df67de3ee2754240",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "getControlType",
+        "func": "let devices = flow.get('devices')\n\nmsg.controlType = devices[msg.device]['controlType']\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1040,
+        "wires": [
+            [
+                "52d4f49a1934d753"
+            ]
+        ]
+    },
+    {
+        "id": "a1db5aa4230e1b84",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setTopic",
+        "func": "const devices = flow.get('devices')\nconst subTopic = devices[msg.payload.device].controlType\n\nmsg.topic = `devices/${subTopic}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1440,
+        "y": 820,
+        "wires": [
+            [
+                "5af4a5954ebf8a45"
+            ]
+        ]
+    },
+    {
+        "id": "df9dca71373f9e59",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check Command",
+        "property": "command",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "update-token",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 1280,
+        "wires": [
+            [
+                "08bb31733d3f0426"
+            ],
+            [
+                "1d67e4c0e083ba99"
+            ]
+        ]
+    },
+    {
+        "id": "08bb31733d3f0426",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$split(msg.command, \" \")[1]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 1260,
+        "wires": [
+            [
+                "39fb55c5f41bab83"
+            ]
+        ]
+    },
+    {
+        "id": "39fb55c5f41bab83",
+        "type": "file",
+        "z": "8d56d03bea1b2724",
+        "name": "writeToken",
+        "filename": "/home/raspberry/SmartHub/token.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 690,
+        "y": 1260,
+        "wires": [
+            [
+                "6124ea7bfb750663"
+            ]
+        ]
+    },
+    {
+        "id": "6124ea7bfb750663",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = \"Bearer token updated\"\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1260,
+        "wires": [
+            [
+                "59a338972c4e1d9d"
+            ]
+        ]
+    },
+    {
+        "id": "59a338972c4e1d9d",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1080,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "7310f865dc282558",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Report Results to Discord",
+        "links": [
+            "b4187894f5e69936",
+            "bbe86cda36f82017"
+        ],
+        "x": 165,
+        "y": 1660,
+        "wires": [
+            [
+                "81687c1d1f4436b8"
+            ]
+        ]
+    },
+    {
+        "id": "b4187894f5e69936",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "RF Results",
+        "mode": "link",
+        "links": [
+            "7310f865dc282558"
+        ],
+        "x": 765,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "bbe86cda36f82017",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "API Results",
+        "mode": "link",
+        "links": [
+            "7310f865dc282558"
+        ],
+        "x": 515,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "8573344d9df0b560",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "api.open-meteo.com",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=44.0582&longitude=-121.3153&timezone=America%2FLos_Angeles&daily=sunset",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 660,
+        "y": 120,
+        "wires": [
+            [
+                "d8034cce354905bb",
+                "76f9c0cad6884a57"
+            ]
+        ]
+    },
+    {
+        "id": "71c0d3dfece0ac37",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1130,
+        "y": 100,
+        "wires": [
+            [
+                "10abacc6974afc8c"
+            ]
+        ]
+    },
+    {
+        "id": "10abacc6974afc8c",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.daily.sunset[0]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1280,
+        "y": 100,
+        "wires": [
+            [
+                "f253c35ae9bd8258"
+            ]
+        ]
+    },
+    {
+        "id": "f253c35ae9bd8258",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "extractTime",
+        "func": "const dateAndTime = msg.payload\nconst time = dateAndTime.split(\"T\").pop()\nmsg.payload = time\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 100,
+        "wires": [
+            [
+                "8bbe17685cec3d53"
+            ]
+        ]
+    },
+    {
+        "id": "ad5025e4703f59e4",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "reset",
+        "props": [
+            {
+                "p": "reset",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "88839e9f3255771c"
+            ]
+        ]
+    },
+    {
+        "id": "b107da1f49df7539",
+        "type": "inject",
+        "z": "8d56d03bea1b2724",
+        "name": "reset",
+        "props": [
+            {
+                "p": "reset",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 490,
+        "y": 560,
+        "wires": [
+            [
+                "6e2be73d9802d0f7"
+            ]
+        ]
+    },
+    {
+        "id": "058f84c95a16c23c",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1140,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "76f9c0cad6884a57",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "1403534621685317685",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 40,
+        "wires": [
+            [
+                "058f84c95a16c23c"
+            ]
+        ]
+    },
+    {
+        "id": "791b22eb59e37506",
+        "type": "debug",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "17faa49b29f17dc7",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "attempt",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 120,
+        "wires": [
+            [
+                "8573344d9df0b560"
+            ]
+        ]
+    },
+    {
+        "id": "64bfafdf629a3015",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "attempt",
+                "pt": "msg",
+                "to": "msg.attempt + 1",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 180,
+        "wires": [
+            [
+                "2eb420e6199717b3"
+            ]
+        ]
+    },
+    {
+        "id": "2eb420e6199717b3",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "attempt",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1230,
+        "y": 180,
+        "wires": [
+            [
+                "e479e48241f2b6a8"
+            ],
+            [
+                "d12d90a4254a2923"
+            ]
+        ]
+    },
+    {
+        "id": "d12d90a4254a2923",
+        "type": "delay",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1380,
+        "y": 200,
+        "wires": [
+            [
+                "4f521f727b177d98"
+            ]
+        ]
+    },
+    {
+        "id": "c00de51ab782fa03",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Retry Link In",
+        "links": [
+            "4f521f727b177d98"
+        ],
+        "x": 515,
+        "y": 180,
+        "wires": [
+            [
+                "8573344d9df0b560"
+            ]
+        ]
+    },
+    {
+        "id": "4f521f727b177d98",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "Retry Link Out",
+        "mode": "link",
+        "links": [
+            "c00de51ab782fa03"
+        ],
+        "x": 1505,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3c101e9386889c38",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check for invalid token",
+        "property": "result.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "401",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 390,
+        "y": 1420,
+        "wires": [
+            [
+                "688029504743e8d2",
+                "77413483b2acb9a1"
+            ],
+            [
+                "bbe86cda36f82017"
+            ]
+        ]
+    },
+    {
+        "id": "688029504743e8d2",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "Set headers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"Content-Type\":\"application/json\",\"X-Ck-Nonce\":\"eZlmGgYu\",\"X-Ck-Appid\":\"K0OCDSvIaBWdEaU4zxlKEwk26kmshoXK\",\"X-Ck-Encryption\":true,\"Authorization\":\"Sign 0hijl1AeYRbfhUgntkONA+/cZ7NAUOOKSMsV6KD/O/8=\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 1460,
+        "wires": [
+            [
+                "ea8892a71a82e287"
+            ]
+        ]
+    },
+    {
+        "id": "4ea6a870c6249ebd",
+        "type": "http request",
+        "z": "8d56d03bea1b2724",
+        "name": "POST /v2/user/login",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://us-apia.coolkit.cc/v2/user/login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "x": 1200,
+        "y": 1460,
+        "wires": [
+            [
+                "6c09b0cc78380c33"
+            ]
+        ]
+    },
+    {
+        "id": "6c09b0cc78380c33",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1390,
+        "y": 1460,
+        "wires": [
+            [
+                "e103f9d7f11bafd2"
+            ]
+        ]
+    },
+    {
+        "id": "feea357cc35271ab",
+        "type": "change",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.at",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 1520,
+        "wires": [
+            [
+                "0d49f1a55037c87d"
+            ]
+        ]
+    },
+    {
+        "id": "0d49f1a55037c87d",
+        "type": "file",
+        "z": "8d56d03bea1b2724",
+        "name": "writeToken",
+        "filename": "/home/raspberry/SmartHub/token.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1090,
+        "y": 1520,
+        "wires": [
+            [
+                "0960c3d9ce187347"
+            ]
+        ]
+    },
+    {
+        "id": "237543ab1deb9bff",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "Retry HTTP",
+        "mode": "link",
+        "links": [
+            "c67a76bceef3b90e"
+        ],
+        "x": 1385,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "77413483b2acb9a1",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = \"Bearer token expired. Attempting to renew it...\"\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 1400,
+        "wires": [
+            [
+                "792824c95ccccfff"
+            ]
+        ]
+    },
+    {
+        "id": "792824c95ccccfff",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 900,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "e103f9d7f11bafd2",
+        "type": "switch",
+        "z": "8d56d03bea1b2724",
+        "name": "Check response code",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 680,
+        "y": 1520,
+        "wires": [
+            [
+                "feea357cc35271ab"
+            ],
+            [
+                "3e3572516e22e024"
+            ]
+        ]
+    },
+    {
+        "id": "3e3572516e22e024",
+        "type": "link out",
+        "z": "8d56d03bea1b2724",
+        "name": "HTTP Error",
+        "mode": "link",
+        "links": [
+            "7b0f6005d1cdc517"
+        ],
+        "x": 815,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "7b0f6005d1cdc517",
+        "type": "link in",
+        "z": "8d56d03bea1b2724",
+        "name": "Error Message",
+        "links": [
+            "3e3572516e22e024"
+        ],
+        "x": 365,
+        "y": 1700,
+        "wires": [
+            [
+                "e2edbb35a2dfe130"
+            ]
+        ]
+    },
+    {
+        "id": "0960c3d9ce187347",
+        "type": "function",
+        "z": "8d56d03bea1b2724",
+        "name": "setDiscordMessge",
+        "func": "let device = msg.device\nlet devices = flow.get('devices')\nlet channel = devices[device].channel\n\nmsg.payload = `Bearer token updated. Reattempting command \"${msg.command}\".`\nmsg.channel = channel\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 1520,
+        "wires": [
+            [
+                "754cfba97b1c5bf4",
+                "237543ab1deb9bff"
+            ]
+        ]
+    },
+    {
+        "id": "754cfba97b1c5bf4",
+        "type": "discordSendMessage",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "channel": "",
+        "token": "",
+        "x": 1520,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "9b5e5e2f330195b3",
+        "type": "comment",
+        "z": "8d56d03bea1b2724",
+        "name": "Handle expired token",
+        "info": "",
+        "x": 320,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "ea8892a71a82e287",
+        "type": "file in",
+        "z": "8d56d03bea1b2724",
+        "name": "setEncryptedBody",
+        "filename": "/home/raspberry/SmartHub/login.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 830,
+        "y": 1460,
+        "wires": [
+            [
+                "1f24d7f41cb4d0ae"
+            ]
+        ]
+    },
+    {
+        "id": "1f24d7f41cb4d0ae",
+        "type": "json",
+        "z": "8d56d03bea1b2724",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1010,
+        "y": 1460,
+        "wires": [
+            [
+                "4ea6a870c6249ebd"
+            ]
+        ]
+    },
+    {
+        "id": "8edadf0ceb978ad1",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
