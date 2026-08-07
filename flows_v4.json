@@ -1933,18 +1933,27 @@
                 "vt": "num"
             },
             {
+                "t": "eq",
+                "v": "402",
+                "vt": "num"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
+        "outputs": 3,
         "x": 390,
         "y": 1420,
         "wires": [
             [
                 "688029504743e8d2",
                 "77413483b2acb9a1"
+            ],
+            [
+                "77413483b2acb9a1",
+                "688029504743e8d2"
             ],
             [
                 "bbe86cda36f82017"
